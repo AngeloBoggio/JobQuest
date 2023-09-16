@@ -27,6 +27,7 @@ export default function Navigation() {
             showConfirmButton: false,
             timer: 1500
         });
+        localStorage.setItem("userId", '');
         navigate("/home");
     };
 
@@ -55,7 +56,7 @@ export default function Navigation() {
                         />
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                        {userId ? (
+                        {userId || localStorage.getItem("userId")? (
                             <div>
                                 <Dropdown.Item as={Link} to={`/profile`}>
                                     Your Profile
