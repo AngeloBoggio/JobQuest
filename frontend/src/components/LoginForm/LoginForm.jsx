@@ -1,24 +1,32 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import Image from "react-bootstrap/Image";
 import appLogo from "../../assets/app-logo.png";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
 import Swal from "sweetalert2";
+import store from "../../store/store";
 
 export default function LoginForm() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-
+    const navigate = useNavigate();
 
     async function handleLogin(e) {
         e.preventDefault()
         signInWithEmailAndPassword(auth, email, password).then
-            (credentials => console.log(credentials)).catch(error => Swal.fire({
-                icon: "error",
-                title: "Error",
-                text: "Invalid username or password."
-            }))
+            (credentials => {store.dispatch({ type: 'userCredentials/setUserCredentials', payload: {userId: credentials.user.uid} })
+            navigate("/home");
+            }).catch(error => {
+            if(error.code === 'auth/invalid-login-credentials'){
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "Invalid username or password."
+                })
+            }
+            }
+        )
     }
 
     return (

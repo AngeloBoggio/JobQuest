@@ -5,8 +5,13 @@ import { Link } from "react-router-dom";
 import appLogo from "../../assets/app-logo.png";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
+import { useSelector } from 'react-redux'
+import {selectUserId} from "../../store/userCredentials/userCredentialsSelectors";
 
 export default function Navigation() {
+    const userId = useSelector((state) => selectUserId(state))
+
+
     return (
         <Navbar className="py-2 navbar">
             <Container>
@@ -38,7 +43,9 @@ export default function Navigation() {
                         >
                             Your Profile
                         </Dropdown.Item>
-                        <Dropdown.Item
+                        {userId ? <Dropdown.Item>
+                            Sign Out
+                        </Dropdown.Item> : <div><Dropdown.Item
                             as={Link}
                             to={`/joblistings`}
                         >
@@ -50,15 +57,12 @@ export default function Navigation() {
                         >
                             Log In
                         </Dropdown.Item>
-                        <Dropdown.Item
+                            <Dropdown.Item
                             as={Link}
-                            to={`/register`}
-                        >
-                            Register
-                        </Dropdown.Item>
-                        <Dropdown.Item>
-                            Sign Out
-                        </Dropdown.Item>
+                        to={`/register`}
+                    >
+                        Register
+                    </Dropdown.Item></div>}
                     </Dropdown.Menu>
                 </Dropdown>
             </Container>
