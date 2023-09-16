@@ -7,6 +7,7 @@ import LoginForm from "../LoginForm/LoginForm";
 import RegisterForm from "../RegisterForm/RegisterForm";
 import JobListings from "../JobListings/JobListings";
 import JobDetails from "../JobDetails/JobDetails";
+import YouTube from "../YouTube/YouTube";
 
 export default function App() {
     return (
@@ -21,6 +22,7 @@ export default function App() {
                     <Route path="/register" element={<RegisterForm />} />
                     <Route path="/joblistings" element={<JobListings />} />
                     <Route path="/joblistings/:id" element={<JobDetails />} />
+                    <Route path="/youtube" element={<YouTube />} />
                 </Routes>
             </BrowserRouter>
         </div>
