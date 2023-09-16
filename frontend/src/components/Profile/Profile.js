@@ -2,18 +2,26 @@ import React, { useState } from "react";
 import "./Profile.css";
 import Button from "react-bootstrap/esm/Button";
 import Modal from "react-bootstrap/Modal";
-
+import { firestore } from "../../firebase";
+import {addDoc,collection} from "firebase/firestore"
 
 export default function Profile() {
   const [showCreatePost, setShowCreatePost] = useState(false);
   const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+  const [description, setDescription] = useState("");
+  const [tags, setTags] = useState("");
 
-  const createPost = (event) => {
+  const ref = collection(firestore, "jobpost");
+
+
+  const createPost = async (event) => {
     event.preventDefault();
+    try{
+        await addDoc(ref, {title: title, tags: tags, description: description})
+    }catch(e){
+        console.log(e);
+    }
 
-
-    console.log("Post created with title: ", title, " and content: ", content);
   };
 
   return (
@@ -40,15 +48,38 @@ export default function Profile() {
                 <form id="job-post-form">
                 <div className="mb-3">
                     <label htmlFor="job-title" className="form-label">Job Title</label>
-                    <input type="text" className="form-control" id="job-title" required />
+                    <input 
+                    type="text" 
+                    className="form-control" 
+                    id="job-title" 
+                    required  
+                    value={title}
+                    onChange={(event) => setTitle(event.target.value)}
+                    />
+                    
                 </div>
                 <div className="mb-3">
                     <label htmlFor="job-description" className="form-label">Job Description</label>
-                    <textarea className="form-control" id="job-description" rows="3" required></textarea>
+                    <textarea 
+                    className="form-control" 
+                    id="job-description" 
+                    rows="3" 
+                    required 
+                    value={description}
+                    onChange={(event) => setDescription(event.target.value)}
+                    />
                 </div>
                 <div className="mb-3">
                     <label htmlFor="job-tags" className="form-label">Technology Tags</label>
-                    <input type="text" className="form-control" id="job-tags" placeholder="e.g., JavaScript, Python" required />
+                    <input 
+                    type="text" 
+                    className="form-control" 
+                    id="job-tags" 
+                    placeholder="e.g., JavaScript, Python" 
+                    required 
+                    value={tags}
+                    onChange={(event) => setTags(event.target.value)}
+                    />
                 </div>
                 </form>
             </div>
@@ -57,7 +88,7 @@ export default function Profile() {
             <Button variant="secondary" onClick={() => setShowCreatePost(false)}>
                 Close
             </Button>
-            <Button variant="primary" type="submit" onClick={(event) => createPost(event)}>
+            <Button variant="primary" type="submit" onClick={ createPost}>
                 Post
             </Button>
             </Modal.Footer>
@@ -67,4 +98,3 @@ export default function Profile() {
   );
 }
 
-  
