@@ -7,10 +7,16 @@ import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import { useSelector } from 'react-redux'
 import {selectUserId} from "../../store/userCredentials/userCredentialsSelectors";
+import {signOut} from "firebase/auth"
+import {auth} from "../../firebase";
+import store from "../../store/store";
 
 export default function Navigation() {
     const userId = useSelector((state) => selectUserId(state))
-
+    const handleSignOut = async () => {
+        store.dispatch({ type: 'userCredentials/setUserCredentials', payload: {userId: null} })
+        await signOut(auth)
+    }
 
     return (
         <Navbar className="py-2 navbar">
@@ -37,20 +43,21 @@ export default function Navigation() {
                         />
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                        <Dropdown.Item
+                        {userId ? <div><Dropdown.Item
                             as={Link}
                             to={`/profile`}
                         >
                             Your Profile
                         </Dropdown.Item>
-                        {userId ? <Dropdown.Item>
+                            <Dropdown.Item onClick={handleSignOut}>
                             Sign Out
-                        </Dropdown.Item> : <div><Dropdown.Item
-                            as={Link}
-                            to={`/joblistings`}
-                        >
-                            Job Listings
                         </Dropdown.Item>
+                            <Dropdown.Item
+                            as={Link}
+                        to={`/joblistings`}
+                    >
+                        Job Listings
+                    </Dropdown.Item></div>: <div>
                         <Dropdown.Item
                             as={Link}
                             to={`/login`}
