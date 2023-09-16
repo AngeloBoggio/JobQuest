@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Card from 'react-bootstrap/Card';
+import Card from "react-bootstrap/Card";
 import { useSelector } from "react-redux";
 import { selectUserId } from "../../store/userCredentials/userCredentialsSelectors";
 import { Link } from "react-router-dom";
@@ -15,11 +15,11 @@ import {
     query,
     where,
     orderBy,
-    limit,
-} from 'firebase/firestore';
-import {firestore} from "../../firebase";
+    limit
+} from "firebase/firestore";
+import { firestore } from "../../firebase";
 export default function JobsView() {
-    const collectionRef = collection(firestore, 'jobPosts');
+    const collectionRef = collection(firestore, "jobPosts");
     const [jobs, setJobs] = useState([]);
     const userId = useSelector((state) => selectUserId(state));
     const [loading, setLoading] = useState(false);
@@ -28,7 +28,7 @@ export default function JobsView() {
         const q = query(
             collectionRef,
             //  where('owner', '==', currentUserId),
-            where('userId', '==', userId) // does not need index
+            where("userId", "==", userId) // does not need index
             //  where('score', '<=', 100) // needs index  https://firebase.google.com/docs/firestore/query-data/indexing?authuser=1&hl=en
             // orderBy('score', 'asc'), // be aware of limitations: https://firebase.google.com/docs/firestore/query-data/order-limit-data#limitations
             // limit(1)
@@ -52,25 +52,21 @@ export default function JobsView() {
     }, []);
 
     useEffect(() => {
-        console.log(jobs)
+        console.log(jobs);
     }, [jobs]);
 
     return (
         <div className="d-flex justify-content-center align-items-center">
             <Link className="nav-link" to="/joblistings/1">
-                <Card style={{ width: '25rem' }}>
+                <Card style={{ width: "25rem" }}>
                     <Card.Body>
                         <Card.Title>Job Title</Card.Title>
-                        <Card.Text className="mb-0">
-                            Company Name
-                        </Card.Text>
-                        <Card.Text>
-                            Tags
-                        </Card.Text>
+                        <Card.Text className="mb-0">Company Name</Card.Text>
+                        <Card.Text>Tags</Card.Text>
                     </Card.Body>
                     <Card.Footer className="text-muted">2 days ago</Card.Footer>
                 </Card>
             </Link>
         </div>
-    )
+    );
 }

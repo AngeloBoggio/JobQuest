@@ -15,17 +15,21 @@ export default function YouTube() {
 
         const response = await axios.get(apiUrl);
 
-        const videoLinks = response.data.items.map(item => `https://www.youtube.com/embed/${item.id.videoId}`);
+        const videoLinks = response.data.items.map(
+            (item) => `https://www.youtube.com/embed/${item.id.videoId}`
+        );
 
         setVideos(videoLinks);
 
         setSearchInput("");
-
     }
 
     return (
         <div className="container mt-3">
-            <form onSubmit={(event) => fetchYouTubeVideos(event)} className="input-group mb-3">
+            <form
+                onSubmit={(event) => fetchYouTubeVideos(event)}
+                className="input-group mb-3"
+            >
                 <input
                     type="text"
                     className="form-control"
@@ -34,9 +38,13 @@ export default function YouTube() {
                     aria-describedby="button-addon2"
                     value={searchInput}
                     onChange={(event) => setSearchInput(event.target.value)}
-                    style={{ width: '200px' }}
+                    style={{ width: "200px" }}
                 />
-                <button className="btn btn-outline-secondary" type="submit" id="button-addon2">
+                <button
+                    className="btn btn-outline-secondary"
+                    type="submit"
+                    id="button-addon2"
+                >
                     Search
                 </button>
             </form>

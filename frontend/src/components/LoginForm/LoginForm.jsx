@@ -1,5 +1,5 @@
 import { useState } from "react";
-import {Link, useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Image from "react-bootstrap/Image";
 import appLogo from "../../assets/app-logo.png";
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -13,20 +13,27 @@ export default function LoginForm() {
     const navigate = useNavigate();
 
     async function handleLogin(e) {
-        e.preventDefault()
-        signInWithEmailAndPassword(auth, email, password).then
-            (credentials => {store.dispatch({ type: 'userCredentials/setUserCredentials', payload: {userId: credentials.user.uid} })
-            navigate("/home");
-            }).catch(error => {
-            if(error.code === 'auth/invalid-login-credentials' || error.code === "auth/invalid-email"){
-                Swal.fire({
-                    icon: "error",
-                    title: "Error",
-                    text: "Invalid username or password."
-                })
-            }
-            }
-        )
+        e.preventDefault();
+        signInWithEmailAndPassword(auth, email, password)
+            .then((credentials) => {
+                store.dispatch({
+                    type: "userCredentials/setUserCredentials",
+                    payload: { userId: credentials.user.uid, userEmail: credentials.user.email }
+                });
+                navigate("/home");
+            })
+            .catch((error) => {
+                if (
+                    error.code === "auth/invalid-login-credentials" ||
+                    error.code === "auth/invalid-email"
+                ) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text: "Invalid username or password."
+                    });
+                }
+            });
     }
 
     return (
@@ -49,19 +56,14 @@ export default function LoginForm() {
                 <form onSubmit={handleLogin}>
                     <div className="row mb-3">
                         <div className="col">
-                            <label
-                                htmlFor="email"
-                                className="form-label w-100"
-                            >
+                            <label htmlFor="email" className="form-label w-100">
                                 Email
                                 <input
                                     type="text"
                                     className="form-control"
                                     id="email"
                                     value={email}
-                                    onChange={(e) =>
-                                        setEmail(e.target.value)
-                                    }
+                                    onChange={(e) => setEmail(e.target.value)}
                                     required
                                 />
                             </label>

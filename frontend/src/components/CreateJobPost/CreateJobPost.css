@@ -3,9 +3,9 @@
     flex-wrap: wrap;
     gap: 5px;
     margin-top: 5px;
-  }
-  
-  .tag {
+}
+
+.tag {
     position: relative;
     padding: 5px;
     background-color: #2f88ee;
@@ -14,14 +14,13 @@
     cursor: pointer;
     display: flex;
     align-items: center;
-  }
-  
-  .tag .close-icon {
+}
+
+.tag .close-icon {
     display: none;
     margin-left: 5px;
-  }
-  
-  .tag:hover .close-icon {
+}
+
+.tag:hover .close-icon {
     display: inline;
-  }
-  
+}

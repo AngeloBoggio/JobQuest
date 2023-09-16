@@ -5,25 +5,28 @@ import { Link } from "react-router-dom";
 import appLogo from "../../assets/app-logo.png";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
-import { useSelector } from 'react-redux'
+import { useSelector } from "react-redux";
 import { selectUserId } from "../../store/userCredentials/userCredentialsSelectors";
-import { signOut } from "firebase/auth"
+import { signOut } from "firebase/auth";
 import { auth } from "../../firebase";
 import store from "../../store/store";
 import Swal from "sweetalert2";
 
 export default function Navigation() {
-    const userId = useSelector((state) => selectUserId(state))
+    const userId = useSelector((state) => selectUserId(state));
     const handleSignOut = async () => {
-        store.dispatch({ type: 'userCredentials/setUserCredentials', payload: { userId: null } })
-        await signOut(auth)
+        store.dispatch({
+            type: "userCredentials/setUserCredentials",
+            payload: { userId: null }
+        });
+        await signOut(auth);
         Swal.fire({
             icon: "success",
             title: "You have signed out!",
             showConfirmButton: false,
             timer: 1500
         });
-    }
+    };
 
     return (
         <Navbar className="py-2 navbar">
@@ -50,37 +53,31 @@ export default function Navigation() {
                         />
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                        {userId ? <div><Dropdown.Item
-                            as={Link}
-                            to={`/profile`}
-                        >
-                            Your Profile
-                        </Dropdown.Item>
-                            <Dropdown.Item
-                                as={Link}
-                                to={`/joblistings`}
-                            >
-                                Job Listings
-                            </Dropdown.Item>
-                            <Dropdown.Item onClick={handleSignOut}>
-                                Sign Out
-                            </Dropdown.Item>
-                        </div> : <div>
-                            <Dropdown.Item
-                                as={Link}
-                                to={`/login`}
-                            >
-                                Log In
-                            </Dropdown.Item>
-                            <Dropdown.Item
-                                as={Link}
-                                to={`/register`}
-                            >
-                                Register
-                            </Dropdown.Item></div>}
+                        {userId ? (
+                            <div>
+                                <Dropdown.Item as={Link} to={`/profile`}>
+                                    Your Profile
+                                </Dropdown.Item>
+                                <Dropdown.Item as={Link} to={`/joblistings`}>
+                                    Job Listings
+                                </Dropdown.Item>
+                                <Dropdown.Item onClick={handleSignOut}>
+                                    Sign Out
+                                </Dropdown.Item>
+                            </div>
+                        ) : (
+                            <div>
+                                <Dropdown.Item as={Link} to={`/login`}>
+                                    Log In
+                                </Dropdown.Item>
+                                <Dropdown.Item as={Link} to={`/register`}>
+                                    Register
+                                </Dropdown.Item>
+                            </div>
+                        )}
                     </Dropdown.Menu>
                 </Dropdown>
             </Container>
         </Navbar>
-    )
+    );
 }
