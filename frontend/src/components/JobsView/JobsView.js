@@ -38,7 +38,6 @@ export default function JobsView() {
             querySnapshot.forEach((doc) => {
                 items.push({ docId: doc.id, data: doc.data() });
             });
-            console.log(items);
             setJobs(items.filter(item => item.data.userId === userId));
             setLoading(false);
         });

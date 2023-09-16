@@ -3,7 +3,7 @@ import "./CreateJobPost.css";
 import Button from "react-bootstrap/esm/Button";
 import Modal from "react-bootstrap/Modal";
 import { firestore } from "../../firebase";
-import { addDoc, collection } from "firebase/firestore";
+import {addDoc, collection, serverTimestamp} from "firebase/firestore";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { selectUserId } from "../../store/userCredentials/userCredentialsSelectors";
@@ -23,6 +23,7 @@ export default function CreateJobPost() {
     const [location, setLocation] = useState("");
     const [description, setDescription] = useState("");
     const [tags, setTags] = useState([]);
+    const [selectedVideos, setSelectedVideos] = useState([])
 
 
     const addTag = () => {
@@ -41,9 +42,14 @@ export default function CreateJobPost() {
         try {
             await addDoc(ref, {
                 title: title,
-                tags: tags.join(", "),
+                tags: tags,
                 description: description,
-                userId: userId
+                userId: userId,
+                companyName: companyName,
+                salary: salary,
+                location: location,
+                videos: selectedVideos,
+                createdDate: serverTimestamp()
             });
             Swal.fire({
                 icon: "success",
@@ -57,7 +63,14 @@ export default function CreateJobPost() {
         }
     };
     const closeJobCreationModal = () => {
+        setDescription('')
+        setLocation('')
+        setSalary('')
+        setTitle('')
+        setCompanyName('')
+        setSearchInput('')
         setShowCreatePost(false);
+        setSelectedVideos([])
         setTags([]);
     }
     async function fetchYouTubeVideos(event) {
@@ -277,11 +290,11 @@ export default function CreateJobPost() {
                                     <div className="d-flex align-items-center justify-content-center">
                                         <button
                                             className="btn btn-primary me-0 ms-0 mt-3 mb-3"
-                                            onClick={() =>
-                                                handleAddVideo(index)
+                                            onClick={() => selectedVideos.includes(videoLink) ? setSelectedVideos(selectedVideos.filter(video => video !== videoLink)) :
+                                                setSelectedVideos([...selectedVideos, videoLink])
                                             }
                                         >
-                                            Add
+                                            {selectedVideos.includes(videoLink) ? 'Remove' : 'Add'}
                                         </button>
                                     </div>
                                 </div>
