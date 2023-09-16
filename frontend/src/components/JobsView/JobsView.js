@@ -20,12 +20,13 @@ import {
 import {firestore} from "../../firebase";
 import {collections} from "../../enums/collections";
 export default function JobsView() {
-    const collectionRef = collection(firestore, "jobPosts");
+    const collectionRef = collection(firestore, collections.jobPostings);
     const [jobs, setJobs] = useState([]);
     const userId = useSelector((state) => selectUserId(state));
     const [loading, setLoading] = useState(false);
 
-    const loadUserJobs = () => {
+
+    useEffect(() => {
         const q = query(
             collectionRef,
             where('userId', '==', userId) // does not need index
@@ -43,11 +44,6 @@ export default function JobsView() {
         return () => {
             unsub();
         };
-    }
-
-
-    useEffect(() => {
-        loadUserJobs()
     }, []);
 
     useEffect(() => {

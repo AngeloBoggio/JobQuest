@@ -19,7 +19,7 @@ export default function CreateJobPost() {
     const userId = useSelector((state) => selectUserId(state));
     const [searchInput, setSearchInput] = useState("");
     const [videos, setVideos] = useState([]);
-    const ref = collection(firestore, "jobpost");
+    const ref = collection(firestore, collections.jobPostings);
 
     const addTag = () => {
         if (currentTag && !tags.includes(currentTag)) {
@@ -41,6 +41,13 @@ export default function CreateJobPost() {
                 description: description,
                 userId: userId
             });
+            Swal.fire({
+                icon: "success",
+                title: "You have succesfully posted a new job!",
+                showConfirmButton: false,
+                timer: 1500
+            });
+            closeJobCreationModal();
         } catch (e) {
             console.log(e);
         }
@@ -68,13 +75,8 @@ export default function CreateJobPost() {
         setSearchInput("");
     }
 
-    setShowCreatePost(false);
-    Swal.fire({
-      icon: "success",
-      title: "You have succesfully posted a new job!",
-      showConfirmButton: false,
-      timer: 1500
-    });
+
+
 
     function handleAddVideo() {}
 
