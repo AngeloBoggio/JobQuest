@@ -5,6 +5,8 @@ import Modal from "react-bootstrap/Modal";
 import { firestore } from "../../firebase";
 import { addDoc, collection } from "firebase/firestore"
 import axios from "axios";
+import { useSelector } from "react-redux";
+import { selectUserId } from "../../store/userCredentials/userCredentialsSelectors";
 
 export default function CreateJobPost() {
   const [showCreatePost, setShowCreatePost] = useState(false);
