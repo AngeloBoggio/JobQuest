@@ -17,8 +17,8 @@ import {
     orderBy,
     limit,
 } from 'firebase/firestore';
-import {firestore} from "../../firebase";
-import {collections} from "../../enums/collections";
+import { firestore } from "../../firebase";
+import { collections } from "../../enums/collections";
 export default function JobsView() {
     const collectionRef = collection(firestore, collections.jobPostings);
     const [jobs, setJobs] = useState([]);
@@ -36,8 +36,9 @@ export default function JobsView() {
         const unsub = onSnapshot(collectionRef, (querySnapshot) => {
             const items = [];
             querySnapshot.forEach((doc) => {
-                items.push({docId: doc.id, data: doc.data()});
+                items.push({ docId: doc.id, data: doc.data() });
             });
+            console.log(items);
             setJobs(items.filter(item => item.data.userId === userId));
             setLoading(false);
         });
@@ -46,26 +47,22 @@ export default function JobsView() {
         };
     }, []);
 
-    useEffect(() => {
-        console.log(jobs);
-    }, [jobs]);
-
     return (
         <div className="d-flex justify-content-center align-items-center">
-            <Link className="nav-link" to="/joblistings/1">
-                {jobs.map((job, index) => <Card key={index} style={{width: '25rem'}}>
+            {jobs.map((job, index) => <Link className="nav-link" to={`/joblistings/${job.docId}`}>
+                <Card key={index} style={{ width: '25rem' }}>
                     <Card.Body>
-                        <Card.Title>{job.title}</Card.Title>
+                        <Card.Title>{job.data.title}</Card.Title>
                         <Card.Text className="mb-0">
-                            Company Name
+                            {job.data.description}
                         </Card.Text>
                         <Card.Text>
-                            Tags
+                            {job.data.tags}
                         </Card.Text>
                     </Card.Body>
                     <Card.Footer className="text-muted">2 days ago</Card.Footer>
-                </Card>)}
-            </Link>
-        </div>
+                </Card></Link>)
+            }
+        </div >
     );
 }

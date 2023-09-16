@@ -1,3 +1,4 @@
+import "./RegisterForm.css";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Image from "react-bootstrap/Image";
@@ -50,7 +51,7 @@ export default function RegisterForm() {
 
     return (
         <div
-            className="container d-flex justify-content-center align-items-center"
+            className="container d-flex justify-content-center register-margin"
             style={{ minHeight: "100vh" }}
         >
             <div className="col-md-6 col-sm-8 col-lg-4">
