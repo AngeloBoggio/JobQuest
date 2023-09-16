@@ -1,3 +1,4 @@
+import "./LoginForm.css";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Image from "react-bootstrap/Image";
@@ -39,7 +40,7 @@ export default function LoginForm() {
 
     return (
         <div
-            className="container d-flex justify-content-center align-items-center"
+            className="container d-flex justify-content-center login-margin"
             style={{ minHeight: "100vh" }}
         >
             <div className="col-md-6 col-sm-8 col-lg-4">
