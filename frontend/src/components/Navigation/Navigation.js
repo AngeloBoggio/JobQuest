@@ -40,6 +40,12 @@ export default function Navigation() {
                         </Dropdown.Item>
                         <Dropdown.Item
                             as={Link}
+                            to={`/joblistings`}
+                        >
+                            Job Listings
+                        </Dropdown.Item>
+                        <Dropdown.Item
+                            as={Link}
                             to={`/login`}
                         >
                             Log In

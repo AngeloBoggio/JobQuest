@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Profile from "../Profile/Profile";
 import LoginForm from "../LoginForm/LoginForm";
 import RegisterForm from "../RegisterForm/RegisterForm";
+import JobListings from "../JobListings/JobListings";
 
 export default function App() {
     return (
@@ -17,6 +18,7 @@ export default function App() {
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/login" element={<LoginForm />} />
                     <Route path="/register" element={<RegisterForm />} />
+                    <Route path="/joblistings" element={<JobListings/>}/>
                 </Routes>
             </BrowserRouter>
         </div>
