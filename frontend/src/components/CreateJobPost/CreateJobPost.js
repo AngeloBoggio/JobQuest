@@ -4,6 +4,8 @@ import Button from "react-bootstrap/esm/Button";
 import Modal from "react-bootstrap/Modal";
 import { firestore } from "../../firebase";
 import {addDoc,collection} from "firebase/firestore"
+import {useSelector} from "react-redux";
+import {selectUserId} from "../../store/userCredentials/userCredentialsSelectors";
 
 export default function CreateJobPost() {
   const [showCreatePost, setShowCreatePost] = useState(false);
@@ -11,13 +13,13 @@ export default function CreateJobPost() {
   const [description, setDescription] = useState("");
   const [tags, setTags] = useState("");
 
-  const ref = collection(firestore, "jobpost");
-
+  const ref = collection(firestore, "jobPosts");
+    const userId = useSelector((state) => selectUserId(state));
 
   const createPost = async (event) => {
     event.preventDefault();
     try{
-        await addDoc(ref, {title: title, tags: tags, description: description})
+        await addDoc(ref, {title: title, tags: tags, description: description, userId: userId})
     }catch(e){
         console.log(e);
     }
