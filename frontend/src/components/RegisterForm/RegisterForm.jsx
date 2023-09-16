@@ -2,8 +2,9 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Image from "react-bootstrap/Image";
 import appLogo from "../../assets/app-logo.png";
-import {createUserWithEmailAndPassword, signInWithEmailAndPassword} from "firebase/auth";
-import {auth} from "../../firebase";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase";
+import Swal from "sweetalert2";
 
 export default function RegisterForm() {
     const [email, setEmail] = useState("");
@@ -11,11 +12,15 @@ export default function RegisterForm() {
 
     const handleRegister = (e) => {
         e.preventDefault();
-        createUserWithEmailAndPassword(auth, email, password ).then
-        (credentials =>
-            console.log(credentials)
-        ).catch(error =>
-            console.log(error))
+        createUserWithEmailAndPassword(auth, email, password).then
+            (credentials =>
+                console.log(credentials)
+            ).catch(error =>
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "Username or email already exists."
+                }))
     }
 
     return (
@@ -30,7 +35,7 @@ export default function RegisterForm() {
                         alt="This is the logo of Career Link."
                         className="app-logo me-2 d-flex justify-content-center"
                     />
-                    Career Link
+                    Job Quest
                 </div>
                 <h2 className="mb-4 text-center fs-5">Create an account</h2>
                 <form onSubmit={handleRegister}>

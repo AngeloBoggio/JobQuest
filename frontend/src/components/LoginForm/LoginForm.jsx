@@ -2,8 +2,9 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Image from "react-bootstrap/Image";
 import appLogo from "../../assets/app-logo.png";
-import {signInWithEmailAndPassword} from "firebase/auth";
-import {auth} from "../../firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase";
+import Swal from "sweetalert2";
 
 export default function LoginForm() {
     const [email, setEmail] = useState("");
@@ -12,8 +13,12 @@ export default function LoginForm() {
 
     async function handleLogin(e) {
         e.preventDefault()
-        signInWithEmailAndPassword(auth, email, password ).then
-        (credentials => console.log(credentials)).catch(error => console.log(error))
+        signInWithEmailAndPassword(auth, email, password).then
+            (credentials => console.log(credentials)).catch(error => Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "Invalid username or password."
+            }))
     }
 
     return (
@@ -28,7 +33,7 @@ export default function LoginForm() {
                         alt="This is the logo of Stock Zone."
                         className="app-logo me-2 d-flex justify-content-center"
                     />
-                    Career Link
+                    Job Quest
                 </div>
                 <h2 className="mb-4 text-center fs-5">
                     Log in to your account
