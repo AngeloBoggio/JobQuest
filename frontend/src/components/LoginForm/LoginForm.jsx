@@ -20,6 +20,7 @@ export default function LoginForm() {
                     type: "userCredentials/setUserCredentials",
                     payload: { userId: credentials.user.uid, userEmail: credentials.user.email }
                 });
+                localStorage.setItem("userId", credentials.user.uid);
                 navigate("/home");
             })
             .catch((error) => {
