@@ -1,7 +1,7 @@
 import "./Navigation.css";
 import Image from "react-bootstrap/Image";
 import Dropdown from "react-bootstrap/Dropdown";
-import { Link } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import appLogo from "../../assets/app-logo.png";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
@@ -14,6 +14,7 @@ import Swal from "sweetalert2";
 
 export default function Navigation() {
     const userId = useSelector((state) => selectUserId(state));
+    const navigate = useNavigate();
     const handleSignOut = async () => {
         store.dispatch({
             type: "userCredentials/setUserCredentials",
@@ -26,6 +27,7 @@ export default function Navigation() {
             showConfirmButton: false,
             timer: 1500
         });
+        navigate("/home");
     };
 
     return (
