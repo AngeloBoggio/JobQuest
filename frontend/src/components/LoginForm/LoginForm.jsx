@@ -18,7 +18,7 @@ export default function LoginForm() {
             (credentials => {store.dispatch({ type: 'userCredentials/setUserCredentials', payload: {userId: credentials.user.uid} })
             navigate("/home");
             }).catch(error => {
-            if(error.code === 'auth/invalid-login-credentials'){
+            if(error.code === 'auth/invalid-login-credentials' || error.code === "auth/invalid-email"){
                 Swal.fire({
                     icon: "error",
                     title: "Error",
