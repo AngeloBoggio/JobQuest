@@ -8,18 +8,22 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { selectUserId } from "../../store/userCredentials/userCredentialsSelectors";
 import Swal from "sweetalert2";
-import {collections} from "../../enums/collections";
+import { collections } from "../../enums/collections";
 
 export default function CreateJobPost() {
     const [showCreatePost, setShowCreatePost] = useState(false);
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
-    const [tags, setTags] = useState([]);
     const [currentTag, setCurrentTag] = useState("");
     const userId = useSelector((state) => selectUserId(state));
     const [searchInput, setSearchInput] = useState("");
     const [videos, setVideos] = useState([]);
     const ref = collection(firestore, collections.jobPostings);
+    const [companyName, setCompanyName] = useState("");
+    const [title, setTitle] = useState("");
+    const [salary, setSalary] = useState("");
+    const [location, setLocation] = useState("");
+    const [description, setDescription] = useState("");
+    const [tags, setTags] = useState([]);
+
 
     const addTag = () => {
         if (currentTag && !tags.includes(currentTag)) {
@@ -75,10 +79,7 @@ export default function CreateJobPost() {
         setSearchInput("");
     }
 
-
-
-
-    function handleAddVideo() {}
+    function handleAddVideo() { }
 
     return (
         <div>
@@ -107,6 +108,24 @@ export default function CreateJobPost() {
                                         htmlFor="job-title"
                                         className="form-label"
                                     >
+                                        Company Name
+                                    </label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        id="job-title"
+                                        required
+                                        value={companyName}
+                                        onChange={(event) =>
+                                            setCompanyName(event.target.value)
+                                        }
+                                    />
+                                </div>
+                                <div className="mb-3">
+                                    <label
+                                        htmlFor="job-title"
+                                        className="form-label"
+                                    >
                                         Job Title
                                     </label>
                                     <input
@@ -117,6 +136,42 @@ export default function CreateJobPost() {
                                         value={title}
                                         onChange={(event) =>
                                             setTitle(event.target.value)
+                                        }
+                                    />
+                                </div>
+                                <div className="mb-3">
+                                    <label
+                                        htmlFor="job-title"
+                                        className="form-label"
+                                    >
+                                        Salary
+                                    </label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        id="job-title"
+                                        required
+                                        value={salary}
+                                        onChange={(event) =>
+                                            setSalary(event.target.value)
+                                        }
+                                    />
+                                </div>
+                                <div className="mb-3">
+                                    <label
+                                        htmlFor="job-title"
+                                        className="form-label"
+                                    >
+                                        Location
+                                    </label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        id="job-title"
+                                        required
+                                        value={location}
+                                        onChange={(event) =>
+                                            setLocation(event.target.value)
                                         }
                                     />
                                 </div>
@@ -143,13 +198,13 @@ export default function CreateJobPost() {
                                         htmlFor="job-tags"
                                         className="form-label"
                                     >
-                                        Technology Tags
+                                        Job Tags
                                     </label>
                                     <input
                                         type="text"
                                         className="form-control"
                                         id="job-tags"
-                                        placeholder="e.g., JavaScript, Python"
+                                        placeholder="e.g., Full-Time, Bachelors Degree, Python, JavaScript"
                                         value={currentTag}
                                         onChange={(event) =>
                                             setCurrentTag(event.target.value)
