@@ -13,7 +13,7 @@ export default function Home() {
           aria-describedby="button-addon2"
         />
         <button className="btn btn-outline-secondary" type="button" id="button-addon2">
-          Search
+          Test
         </button>
       </div>
     </div>
