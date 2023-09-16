@@ -1,6 +1,5 @@
-const initialState =
-     JSON.parse(localStorage.getItem("userId")) || {}
-;
+const storedData = localStorage.getItem("userId");
+const initialState = storedData ? JSON.parse(storedData) : {};
 
 function nextTodoId(todos) {
     const maxId = todos.reduce((maxId, todo) => Math.max(todo.id, maxId), -1);
