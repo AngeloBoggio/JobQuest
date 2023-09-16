@@ -11,14 +11,14 @@ export default function CreateJobPost() {
   const [description, setDescription] = useState("");
   const [tags, setTags] = useState([]);
   const [currentTag, setCurrentTag] = useState("");
-
+  const userId = useSelector((state) => selectUserId(state));
   const ref = collection(firestore, "jobpost");
 
 
   const createPost = async (event) => {
     event.preventDefault();
     try{
-        await addDoc(ref, {title: title, tags: tags, description: description})
+        await addDoc(ref, {title: title, tags: tags, description: description, userId: userId})
     }catch(e){
         console.log(e);
     }
