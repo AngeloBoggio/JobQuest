@@ -18,7 +18,7 @@ export default function App() {
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/login" element={<LoginForm />} />
                     <Route path="/register" element={<RegisterForm />} />
-                    <Route path="/joblistings" element={<JobListings/>}/>
+                    <Route path="/joblistings" element={<JobListings />} />
                 </Routes>
             </BrowserRouter>
         </div>
