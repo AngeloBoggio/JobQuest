@@ -6,6 +6,7 @@ import Profile from "../Profile/Profile";
 import LoginForm from "../LoginForm/LoginForm";
 import RegisterForm from "../RegisterForm/RegisterForm";
 import JobListings from "../JobListings/JobListings";
+import JobDetails from "../JobDetails/JobDetails";
 
 export default function App() {
     return (
@@ -19,6 +20,7 @@ export default function App() {
                     <Route path="/login" element={<LoginForm />} />
                     <Route path="/register" element={<RegisterForm />} />
                     <Route path="/joblistings" element={<JobListings />} />
+                    <Route path="/joblistings/:id" element={<JobDetails />} />
                 </Routes>
             </BrowserRouter>
         </div>
