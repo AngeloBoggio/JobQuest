@@ -8,6 +8,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { selectUserId } from "../../store/userCredentials/userCredentialsSelectors";
 import Swal from "sweetalert2";
+import {collections} from "../../enums/collections";
 
 export default function CreateJobPost() {
     const [showCreatePost, setShowCreatePost] = useState(false);
@@ -18,7 +19,6 @@ export default function CreateJobPost() {
     const userId = useSelector((state) => selectUserId(state));
     const [searchInput, setSearchInput] = useState("");
     const [videos, setVideos] = useState([]);
-
     const ref = collection(firestore, "jobpost");
 
     const addTag = () => {
@@ -38,13 +38,17 @@ export default function CreateJobPost() {
             await addDoc(ref, {
                 title: title,
                 tags: tags.join(", "),
-                description: description
+                description: description,
+                userId: userId
             });
         } catch (e) {
             console.log(e);
         }
     };
-
+    const closeJobCreationModal = () => {
+        setShowCreatePost(false);
+        setTags([]);
+    }
     async function fetchYouTubeVideos(event) {
         event.preventDefault();
 
@@ -63,7 +67,7 @@ export default function CreateJobPost() {
 
         setSearchInput("");
     }
-    
+
     setShowCreatePost(false);
     Swal.fire({
       icon: "success",
@@ -87,7 +91,7 @@ export default function CreateJobPost() {
 
                 <Modal
                     show={showCreatePost}
-                    onHide={() => setShowCreatePost(false)}
+                    onHide={closeJobCreationModal}
                     centered
                 >
                     <Modal.Header closeButton>
@@ -230,7 +234,7 @@ export default function CreateJobPost() {
                     <Modal.Footer>
                         <Button
                             variant="secondary"
-                            onClick={() => setShowCreatePost(false)}
+                            onClick={closeJobCreationModal}
                         >
                             Close
                         </Button>
