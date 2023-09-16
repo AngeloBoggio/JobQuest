@@ -7,6 +7,7 @@ import { addDoc, collection } from "firebase/firestore"
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { selectUserId } from "../../store/userCredentials/userCredentialsSelectors";
+import Swal from "sweetalert2";
 
 export default function CreateJobPost() {
   const [showCreatePost, setShowCreatePost] = useState(false);
@@ -37,6 +38,14 @@ export default function CreateJobPost() {
     } catch (e) {
       console.log(e);
     }
+    
+    setShowCreatePost(false);
+    Swal.fire({
+      icon: "success",
+      title: "You have succesfully posted a new job!",
+      showConfirmButton: false,
+      timer: 1500
+    });
 
   };
 
