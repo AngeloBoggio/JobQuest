@@ -2,13 +2,20 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Image from "react-bootstrap/Image";
 import appLogo from "../../assets/app-logo.png";
+import {createUserWithEmailAndPassword, signInWithEmailAndPassword} from "firebase/auth";
+import {auth} from "../../firebase";
 
 export default function RegisterForm() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    async function handleSubmit() {
-
+    const handleRegister = (e) => {
+        e.preventDefault();
+        createUserWithEmailAndPassword(auth, email, password ).then
+        (credentials =>
+            console.log(credentials)
+        ).catch(error =>
+            console.log(error))
     }
 
     return (
@@ -26,7 +33,7 @@ export default function RegisterForm() {
                     Career Link
                 </div>
                 <h2 className="mb-4 text-center fs-5">Create an account</h2>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleRegister}>
                     <div className="mb-3">
                         <label htmlFor="email" className="form-label w-100">
                             Email

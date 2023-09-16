@@ -2,13 +2,18 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Image from "react-bootstrap/Image";
 import appLogo from "../../assets/app-logo.png";
+import {signInWithEmailAndPassword} from "firebase/auth";
+import {auth} from "../../firebase";
 
 export default function LoginForm() {
-    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    async function handleLogin() {
 
+    async function handleLogin(e) {
+        e.preventDefault()
+        signInWithEmailAndPassword(auth, email, password ).then
+        (credentials => console.log(credentials)).catch(error => console.log(error))
     }
 
     return (
@@ -32,17 +37,17 @@ export default function LoginForm() {
                     <div className="row mb-3">
                         <div className="col">
                             <label
-                                htmlFor="username"
+                                htmlFor="email"
                                 className="form-label w-100"
                             >
-                                Username
+                                Email
                                 <input
                                     type="text"
                                     className="form-control"
-                                    id="username"
-                                    value={username}
+                                    id="email"
+                                    value={email}
                                     onChange={(e) =>
-                                        setUsername(e.target.value)
+                                        setEmail(e.target.value)
                                     }
                                     required
                                 />
