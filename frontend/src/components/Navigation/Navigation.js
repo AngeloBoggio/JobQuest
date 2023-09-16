@@ -38,6 +38,18 @@ export default function Navigation() {
                         >
                             Your Profile
                         </Dropdown.Item>
+                        <Dropdown.Item
+                            as={Link}
+                            to={`/login`}
+                        >
+                            Log In
+                        </Dropdown.Item>
+                        <Dropdown.Item
+                            as={Link}
+                            to={`/register`}
+                        >
+                            Register
+                        </Dropdown.Item>
                         <Dropdown.Item>
                             Sign Out
                         </Dropdown.Item>
