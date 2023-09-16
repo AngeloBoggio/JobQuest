@@ -17,11 +17,12 @@ export default function LoginForm() {
         e.preventDefault();
         signInWithEmailAndPassword(auth, email, password)
             .then((credentials) => {
+                const userCredentials = { userId: credentials.user.uid, userEmail: credentials.user.email }
                 store.dispatch({
                     type: "userCredentials/setUserCredentials",
-                    payload: { userId: credentials.user.uid, userEmail: credentials.user.email }
+                    payload: userCredentials
                 });
-                localStorage.setItem("userId", credentials.user.uid);
+                localStorage.setItem("userId", JSON.stringify(userCredentials));
                 navigate("/home");
             })
             .catch((error) => {
