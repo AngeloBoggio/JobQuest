@@ -15,7 +15,7 @@ export default function Home() {
                     aria-describedby="button-addon2"
                     value={searchInput}
                     onChange={(event) => setSearchInput(event.target.value)}
-
+                    style={{ width: '200px' }} 
                 />
                 <button className="btn btn-outline-secondary" type="button" id="button-addon2">
                     Search
