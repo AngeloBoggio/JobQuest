@@ -3,7 +3,7 @@ import "./CreateJobPost.css";
 import Button from "react-bootstrap/esm/Button";
 import Modal from "react-bootstrap/Modal";
 import { firestore } from "../../firebase";
-import {addDoc,collection} from "firebase/firestore"
+import { addDoc, collection } from "firebase/firestore";
 
 export default function CreateJobPost() {
   const [showCreatePost, setShowCreatePost] = useState(false);
@@ -14,13 +14,23 @@ export default function CreateJobPost() {
   const userId = useSelector((state) => selectUserId(state));
   const ref = collection(firestore, "jobpost");
 
+  const addTag = () => {
+    if (currentTag && !tags.includes(currentTag)) {
+      setTags([...tags, currentTag]);
+      setCurrentTag("");
+    }
+  };
+
+  const removeTag = (removedTag) => {
+    setTags(tags.filter(tag => tag !== removedTag));
+  };
 
   const createPost = async (event) => {
     event.preventDefault();
-    try{
-        await addDoc(ref, {title: title, tags: tags, description: description, userId: userId})
-    }catch(e){
-        console.log(e);
+    try {
+      await addDoc(ref, { title: title, tags: tags.join(', '), description: description });
+    } catch (e) {
+      console.log(e);
     }
   };
 
