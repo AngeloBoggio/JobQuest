@@ -20,7 +20,7 @@ export default function Navigation() {
                         alt="This is the logo of our website."
                         className="app-logo me-2"
                     />
-                    Career Link
+                    Job Quest
                 </Navbar.Brand>
                 <Dropdown className="d-flex justify-content-end me-3">
                     <Dropdown.Toggle variant="link" bsPrefix="none">
