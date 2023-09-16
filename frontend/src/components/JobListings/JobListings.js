@@ -1,18 +1,12 @@
-import React, { useState } from "react";
 import "./JobListings.css";
-import Button from "react-bootstrap/esm/Button";
-import Modal from "react-bootstrap/Modal";
 import CreateJobPost from "../CreateJobPost/CreateJobPost";
-
-
+import JobsView from "../JobsView/JobsView";
 
 export default function JobListings() {
-
-
-    return(
+    return (
         <div>
             <CreateJobPost />
+            <JobsView />
         </div>
     );
-
 }
