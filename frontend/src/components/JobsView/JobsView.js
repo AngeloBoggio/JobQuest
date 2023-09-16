@@ -48,7 +48,8 @@ export default function JobsView() {
 
     return (
         <div className="d-flex justify-content-center align-items-center">
-            {jobs.map((job, index) => <Link className="nav-link" to={`/joblistings/${job.docId}`}>
+            {jobs.map((job, index) =>
+                <Link key={index} className="nav-link" to={`/joblistings/${job.docId}`}>
                 <Card key={index} style={{ width: '25rem' }}>
                     <Card.Body>
                         <Card.Title>{job.data.title}</Card.Title>
