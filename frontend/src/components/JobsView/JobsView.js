@@ -41,13 +41,6 @@ export default function JobsView() {
                 items.push({ docId: doc.id, data: doc.data() });
             });
             items.sort((a, b) => b.data.createdDate?.seconds - a.data.createdDate?.seconds);
-            if (jobs.length === 0) {
-                Swal.fire({
-                    icon: "info",
-                    title: "Get Started with Job Quest!",
-                    text: "Create a new job now."
-                });
-            }
             setJobs(items.filter((item) => item.data.userId === userId));
             setLoading(false);
         });
