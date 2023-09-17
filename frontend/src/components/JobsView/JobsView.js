@@ -87,7 +87,7 @@ export default function JobsView() {
     return (
         <div className="d-flex flex-column justify-content-center align-items-center">
             {jobs?.map((job, index) => (
-                <div className="mb-4">
+                <div className="mb-4" key={index}>
                     <Link
                         key={index}
                         className="nav-link"
@@ -118,8 +118,8 @@ export default function JobsView() {
                                         Description: {truncateTextWithEllipses(job.data.description, 300)}
                                     </Card.Text>
                                     <div className="d-flex">
-                                        {job.data.tags.map((tag) => (
-                                            <Card.Text className="m-0 me-2">
+                                        {job.data.tags.map((tag, index) => (
+                                            <Card.Text className="m-0 me-2" key={index}>
                                                 <p className="job-tag">{tag}</p>
                                             </Card.Text>
                                         ))}

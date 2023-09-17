@@ -85,7 +85,7 @@ export default function EditPost({ job }) {
                     location: location,
                     videos: selectedVideos,
                     createdDate: serverTimestamp(),
-                    logoUrl: job.logoUrl
+                    logoUrl: job.data.logoUrl
                 };
 
                 try {
