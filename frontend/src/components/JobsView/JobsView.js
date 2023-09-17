@@ -16,8 +16,8 @@ import {
     query,
     where,
     orderBy,
-    limit,
-} from 'firebase/firestore';
+    limit
+} from "firebase/firestore";
 import { firestore } from "../../firebase";
 import { collections } from "../../enums/collections";
 export default function JobsView() {
@@ -29,7 +29,7 @@ export default function JobsView() {
     useEffect(() => {
         const q = query(
             collectionRef,
-            where('userId', '==', userId) // does not need index
+            where("userId", "==", userId) // does not need index
         );
 
         setLoading(true);
@@ -38,7 +38,7 @@ export default function JobsView() {
             querySnapshot.forEach((doc) => {
                 items.push({ docId: doc.id, data: doc.data() });
             });
-            setJobs(items.filter(item => item.data.userId === userId));
+            setJobs(items.filter((item) => item.data.userId === userId));
             setLoading(false);
         });
         return () => {
@@ -55,18 +55,22 @@ export default function JobsView() {
         // Function to determine the day suffix
         function getDaySuffix(day) {
             if (day >= 11 && day <= 13) {
-                return 'th';
+                return "th";
             }
             switch (day % 10) {
-                case 1: return 'st';
-                case 2: return 'nd';
-                case 3: return 'rd';
-                default: return 'th';
+                case 1:
+                    return "st";
+                case 2:
+                    return "nd";
+                case 3:
+                    return "rd";
+                default:
+                    return "th";
             }
         }
 
         // Format the date
-        const options = { month: 'long' };
+        const options = { month: "long" };
         const formattedDate = date.toLocaleDateString(undefined, options);
         const daySuffix = getDaySuffix(day);
         return `${formattedDate} ${day}${daySuffix}`;
@@ -74,17 +78,29 @@ export default function JobsView() {
 
     return (
         <div className="d-flex justify-content-center align-items-center">
-            {jobs.map((job, index) =>
+            {jobs.map((job, index) => (
                 <div className="mb-4">
-                    <Link key={index} className="nav-link" to={`/joblistings/${job.docId}`}>
-                        <Card key={index} style={{ width: '1000px' }}>
+                    <Link
+                        key={index}
+                        className="nav-link"
+                        to={`/joblistings/${job.docId}`}
+                    >
+                        <Card key={index} style={{ width: "1000px" }}>
                             <div className="d-flex">
-                                <img src="https://expresswriters.com/wp-content/uploads/2015/09/google-new-logo-450x450.jpg" style={{ width: '200px', height: '200px' }} />
+                                <img
+                                    src="https://expresswriters.com/wp-content/uploads/2015/09/google-new-logo-450x450.jpg"
+                                    style={{ width: "200px", height: "200px" }}
+                                />
                                 <Card.Body>
                                     <Card.Title>
                                         <div className="d-flex justify-content-between">
-                                            <p className="m-0">{job.data.title} ({job.data.companyName})</p>
-                                            <p className="m-0">Salary: {job.data.salary}</p>
+                                            <p className="m-0">
+                                                {job.data.title} (
+                                                {job.data.companyName})
+                                            </p>
+                                            <p className="m-0">
+                                                Salary: {job.data.salary}
+                                            </p>
                                         </div>
                                     </Card.Title>
                                     <Card.Text className="mb-2">
@@ -94,21 +110,22 @@ export default function JobsView() {
                                         Description: {job.data.description}
                                     </Card.Text>
                                     <div className="d-flex">
-                                        {
-                                            job.data.tags.map((tag) => (
-                                                <Card.Text className="m-0 me-2">
-                                                    <p className="job-tag">{tag}</p>
-                                                </Card.Text>
-                                            ))
-                                        }
+                                        {job.data.tags.map((tag) => (
+                                            <Card.Text className="m-0 me-2">
+                                                <p className="job-tag">{tag}</p>
+                                            </Card.Text>
+                                        ))}
                                     </div>
                                 </Card.Body>
                             </div>
                             <Card.Footer>
-                                Posted on {formatDate(job.data.createdDate.seconds)}
+                                Posted on{" "}
+                                {formatDate(job.data.createdDate.seconds)}
                             </Card.Footer>
-                        </Card></Link></div>)
-            }
-        </div >
+                        </Card>
+                    </Link>
+                </div>
+            ))}
+        </div>
     );
 }

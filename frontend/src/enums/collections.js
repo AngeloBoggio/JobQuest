@@ -1,3 +1,3 @@
 export const collections = {
-	jobPostings: "jobPostings",
-}
+    jobPostings: "jobPostings"
+};
