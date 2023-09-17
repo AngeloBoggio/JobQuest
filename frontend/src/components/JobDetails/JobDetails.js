@@ -1,5 +1,4 @@
 import "./JobDetails.css";
-import "./JobDetails.css";
 import Card from "react-bootstrap/Card";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -8,6 +7,9 @@ import { firestore } from "../../firebase";
 import { collections } from "../../enums/collections";
 import { useSelector } from "react-redux";
 import { selectUserId } from "../../store/userCredentials/userCredentialsSelectors";
+import Button from 'react-bootstrap/Button';
+import EditJob from "../EditJob/EditJob";
+import Swal from "sweetalert2";
 
 export default function JobDetails() {
     const collectionRef = collection(firestore, collections.jobPostings);
@@ -97,6 +99,27 @@ export default function JobDetails() {
         return `${formattedDate} ${day}${daySuffix}`;
     }
 
+    function deletePost() {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, remove this Job.'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire(
+                    'Job Removed',
+                    'Your job has been deleted!',
+                    'success'
+                )
+                // Do something with database here Cruz
+            }
+        })
+    }
+
     return (
         job ? (
             <div className="d-flex justify-content-center mt-4 mb-4">
@@ -107,6 +130,10 @@ export default function JobDetails() {
                                 src={job.data.logoUrl}
                                 style={{ width: "200px", height: "200px" }}
                             />
+                            <div className="d-flex flex-column">
+                                <EditJob job={job} />
+                                <Button variant="outline-danger" onClick={deletePost}>Delete</Button>
+                            </div>
                         </div>
                         <Card.Body className="ps-0">
                             <Card.Title>
