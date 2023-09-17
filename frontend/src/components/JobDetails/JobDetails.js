@@ -1,4 +1,5 @@
 import "./JobDetails.css";
+import "./JobDetails.css";
 import Card from "react-bootstrap/Card";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -35,6 +36,36 @@ export default function JobDetails() {
             unsub();
         };
     }, []);
+
+    function formatDate(timestamp) {
+        const date = new Date(timestamp * 1000); // Convert seconds to milliseconds
+
+        // Get the day of the month
+        const day = date.getDate();
+
+        // Function to determine the day suffix
+        function getDaySuffix(day) {
+            if (day >= 11 && day <= 13) {
+                return "th";
+            }
+            switch (day % 10) {
+                case 1:
+                    return "st";
+                case 2:
+                    return "nd";
+                case 3:
+                    return "rd";
+                default:
+                    return "th";
+            }
+        }
+
+        // Format the date
+        const options = { month: "long" };
+        const formattedDate = date.toLocaleDateString(undefined, options);
+        const daySuffix = getDaySuffix(day);
+        return `${formattedDate} ${day}${daySuffix}`;
+    }
 
     function formatDate(timestamp) {
         const date = new Date(timestamp * 1000); // Convert seconds to milliseconds

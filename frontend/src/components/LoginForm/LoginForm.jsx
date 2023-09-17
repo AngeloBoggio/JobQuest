@@ -18,8 +18,7 @@ export default function LoginForm() {
         signInWithEmailAndPassword(auth, email, password)
             .then((credentials) => {
                 const userCredentials = {
-                    userId: credentials.user.uid,
-                    userEmail: credentials.user.email
+                    userId: credentials.user.uid
                 };
                 store.dispatch({
                     type: "userCredentials/setUserCredentials",

@@ -30,6 +30,7 @@ export default function JobsView() {
         const q = query(
             collectionRef,
             where("userId", "==", userId)
+            where("userId", "==", userId)
         );
 
         setLoading(true);
@@ -107,6 +108,7 @@ export default function JobsView() {
                                                 {job.data.companyName})
                                             </p>
                                             <p className="m-0">
+                                                Salary: {Number(job.data.salary).toLocaleString("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 2 })}
                                                 Salary: {Number(job.data.salary).toLocaleString("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 2 })}
                                             </p>
                                         </div>

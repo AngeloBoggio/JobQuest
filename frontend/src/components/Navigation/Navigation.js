@@ -49,7 +49,7 @@ export default function Navigation() {
                 <Dropdown className="d-flex justify-content-end me-3">
                     <Dropdown.Toggle variant="link" bsPrefix="none">
                         <Image
-                            src="https://t3.ftcdn.net/jpg/00/64/67/52/360_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg"
+                            src="https://i.etsystatic.com/5215360/r/il/03b263/1284577071/il_1080xN.1284577071_iv53.jpg"
                             alt="Profile Picture"
                             roundedCircle
                             className="navbar-profile"

@@ -11,8 +11,7 @@ export default function userCredentialsReducer(state = initialState, action) {
             // Can return just the new todos array - no extra object around it
             return {
                 ...state,
-                userId: action.payload.userId,
-                userEmail: action.payload.userEmail
+                userId: action.payload.userId
             };
         }
         default:

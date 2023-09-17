@@ -1,0 +1,31 @@
+.profile-card {
+    width: 300px; /* Adjust the width as per your requirement */
+    margin: 0 auto; /* Center the card horizontally */
+    position: relative; /* Set position to relative to use top and left properties */
+}
+
+.profile-header {
+    text-align: center; /* Center the text */
+    margin-bottom: 20px; /* Add some space between the header and the card */
+}
+
+.custom-card {
+    width: 250px; /* Adjust the width of the card */
+    margin: 0 auto; /* Center the card within the .profile-card div */
+}
+
+.custom-card img {
+    width: 100%; /* Make the image fill the card */
+    border-radius: 15px; /* Optional: add border radius to the image */
+}
+
+.email{
+    font-size: 23px;
+}
+.firstName{
+    font-size: 23px;
+}
+
+.lastName{
+    font-size: 23px;
+}
