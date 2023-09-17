@@ -33,8 +33,35 @@ export default function Home() {
             unsub();
         };
     }, []);
+
+    function formatDate(timestamp) {
+        const date = new Date(timestamp * 1000); // Convert seconds to milliseconds
+
+        // Get the day of the month
+        const day = date.getDate();
+
+        // Function to determine the day suffix
+        function getDaySuffix(day) {
+            if (day >= 11 && day <= 13) {
+                return 'th';
+            }
+            switch (day % 10) {
+                case 1: return 'st';
+                case 2: return 'nd';
+                case 3: return 'rd';
+                default: return 'th';
+            }
+        }
+
+        // Format the date
+        const options = { month: 'long' };
+        const formattedDate = date.toLocaleDateString(undefined, options);
+        const daySuffix = getDaySuffix(day);
+        return `${formattedDate} ${day}${daySuffix}`;
+    }
+
     return (
-        <div className="container mt-3" style={{ width: "800px" }}>
+        <div className="container mt-3" style={{ width: "900px" }}>
             <div className="input-group mb-3">
                 <input
                     type="text"
@@ -53,23 +80,42 @@ export default function Home() {
                     Search
                 </button>
             </div>
-            {jobs.map((job, index) => (
+            {jobs.map((job, index) =>
                 <div className="mb-4">
-                    <Link className="nav-link" to={`/joblistings/${job.docId}`}>
-                        <Card key={index}>
-                            <Card.Body>
-                                <Card.Title>{job.data.title}</Card.Title>
-                                <Card.Text className="mb-0">
-                                    {job.data.description}
-                                </Card.Text>
-                                <Card.Text>
-                                    {job.data.tags}
-                                </Card.Text>
-                            </Card.Body>
-                            <Card.Footer className="text-muted">2 days ago</Card.Footer>
-                        </Card>
-                    </Link>
-                </div>))}
+                    <Link key={index} className="nav-link" to={`/joblistings/${job.docId}`}>
+                        <Card key={index} style={{ width: '875px' }}>
+                            <div className="d-flex">
+                                <img src="https://expresswriters.com/wp-content/uploads/2015/09/google-new-logo-450x450.jpg" style={{ width: '200px', height: '200px' }} />
+                                <Card.Body>
+                                    <Card.Title>
+                                        <div className="d-flex justify-content-between">
+                                            <p className="m-0">{job.data.title} ({job.data.companyName})</p>
+                                            <p className="m-0">Salary: {job.data.salary}</p>
+                                        </div>
+                                    </Card.Title>
+                                    <Card.Text className="mb-2">
+                                        Location: {job.data.location}
+                                    </Card.Text>
+                                    <Card.Text className="mb-2">
+                                        Description: {job.data.description}
+                                    </Card.Text>
+                                    <div className="d-flex">
+                                        {
+                                            job.data.tags.map((tag) => (
+                                                <Card.Text className="m-0 me-2">
+                                                    <p className="job-tag">{tag}</p>
+                                                </Card.Text>
+                                            ))
+                                        }
+
+                                    </div>
+                                </Card.Body>
+                            </div>
+                            <Card.Footer>
+                                Posted on {formatDate(job.data.createdDate.seconds)}
+                            </Card.Footer>
+                        </Card></Link></div>)
+            }
         </div >
     );
 }

@@ -1,6 +1,9 @@
 import Card from "react-bootstrap/Card";
+import { useParams } from "react-router-dom";
 
 export default function JobDetails() {
+    const { id } = useParams(); //docId
+
     return (
         <div className="d-flex justify-content-center align-items-center mt-5">
             <Card style={{ width: "40rem" }}>

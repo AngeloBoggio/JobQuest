@@ -3,7 +3,7 @@ import "./CreateJobPost.css";
 import Button from "react-bootstrap/esm/Button";
 import Modal from "react-bootstrap/Modal";
 import { firestore } from "../../firebase";
-import {addDoc, collection, serverTimestamp} from "firebase/firestore";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { selectUserId } from "../../store/userCredentials/userCredentialsSelectors";
