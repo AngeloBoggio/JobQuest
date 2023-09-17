@@ -24,3 +24,8 @@
 .tag:hover .close-icon {
     display: inline;
 }
+
+.custom-modal {
+    max-width: 2000px;
+    width: 100%;
+}

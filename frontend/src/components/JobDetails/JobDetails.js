@@ -73,7 +73,7 @@ export default function JobDetails() {
                     <div className="d-flex">
                         <div className="line-container">
                             <img
-                                src="https://expresswriters.com/wp-content/uploads/2015/09/google-new-logo-450x450.jpg"
+                                src={job.data.logoUrl}
                                 style={{ width: "200px", height: "200px" }}
                             />
                         </div>

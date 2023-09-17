@@ -89,7 +89,7 @@ export default function JobsView() {
                         <Card key={index} style={{ width: "1000px" }}>
                             <div className="d-flex">
                                 <img
-                                    src="https://expresswriters.com/wp-content/uploads/2015/09/google-new-logo-450x450.jpg"
+                                    src={job.data.logoUrl}
                                     style={{ width: "200px", height: "200px" }}
                                 />
                                 <Card.Body>

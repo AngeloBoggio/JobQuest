@@ -9,8 +9,8 @@ import { useSelector } from "react-redux";
 import { selectUserId } from "../../store/userCredentials/userCredentialsSelectors";
 import Swal from "sweetalert2";
 import { collections } from "../../enums/collections";
-import {ref, uploadBytes, getStorage, getDownloadURL, listAll} from "firebase/storage"
-import {v4} from "uuid"
+import { ref, uploadBytes, getStorage, getDownloadURL, listAll } from "firebase/storage"
+import { v4 } from "uuid"
 
 
 export default function CreateJobPost() {
@@ -49,7 +49,7 @@ export default function CreateJobPost() {
             const url = selectedLogo.name + v4();
             const logoRef = ref(storage, `logos/${url}`)
             uploadBytes(logoRef, selectedLogo).then(response =>
-                getDownloadURL(response.ref).then( async url => {
+                getDownloadURL(response.ref).then(async url => {
                     await addDoc(collectionRef, {
                         title: title,
                         tags: tags,
@@ -69,7 +69,7 @@ export default function CreateJobPost() {
                         timer: 1500
                     });
                     closeJobCreationModal();
-            }))
+                }))
         } catch (e) {
             console.log(e);
         }
@@ -119,6 +119,7 @@ export default function CreateJobPost() {
                     show={showCreatePost}
                     onHide={closeJobCreationModal}
                     centered
+                    dialogClassName="modal-lg"
                 >
                     <Modal.Header closeButton>
                         <Modal.Title>Create Job</Modal.Title>
@@ -227,7 +228,7 @@ export default function CreateJobPost() {
                                         type="text"
                                         className="form-control"
                                         id="job-tags"
-                                        placeholder="e.g., Full-Time, Bachelors Degree, Python, JavaScript"
+                                        placeholder="e.g., Full-Time, Sophomore, Python, JavaScript"
                                         value={currentTag}
                                         onChange={(event) =>
                                             setCurrentTag(event.target.value)
@@ -255,9 +256,10 @@ export default function CreateJobPost() {
                                             </div>
                                         ))}
                                     </div>
-                                    <input onChange={(event) =>
+                                    <p className="m-0 mt-3 mb-2">Upload Company Logo</p>
+                                    <input className="mb-2" onChange={(event) =>
                                         setSelectedLogo(event.target.files[0])
-                                    } type="file" accept="image/jpeg, image/png, image/jpg"/>
+                                    } type="file" accept="image/jpeg, image/png, image/jpg" />
                                 </div>
                                 <form
                                     onSubmit={(event) =>
@@ -268,7 +270,7 @@ export default function CreateJobPost() {
                                     <input
                                         type="text"
                                         className="form-control"
-                                        placeholder="Search"
+                                        placeholder="Search for specific videos..."
                                         aria-label="Search"
                                         aria-describedby="button-addon2"
                                         value={searchInput}
