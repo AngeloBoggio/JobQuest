@@ -108,7 +108,6 @@ export default function JobsView() {
                                             </p>
                                             <p className="m-0">
                                                 Salary: {Number(job.data.salary).toLocaleString("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 2 })}
-                                                Salary: {Number(job.data.salary).toLocaleString("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 2 })}
                                             </p>
                                         </div>
                                     </Card.Title>

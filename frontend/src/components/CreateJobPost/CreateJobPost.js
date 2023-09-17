@@ -37,8 +37,6 @@ export default function CreateJobPost() {
         }
     };
 
-
-
     const removeTag = (removedTag) => {
         setTags(tags.filter((tag) => tag !== removedTag));
     };
