@@ -1,0 +1,10 @@
+.line-container {
+    border-right: 2px solid black;
+    padding-right: 20px;
+    margin-right: 20px;
+}
+
+.iframe-border {
+    border: 3px solid black;
+    border-radius: 15px;
+}
