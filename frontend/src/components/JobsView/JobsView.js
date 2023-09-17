@@ -119,8 +119,7 @@ export default function JobsView() {
                                 </Card.Body>
                             </div>
                             <Card.Footer>
-                                Posted on{" "}
-                                {formatDate(job.data.createdDate.seconds)}
+                                Posted on {formatDate(job.data.createdDate)}
                             </Card.Footer>
                         </Card>
                     </Link>

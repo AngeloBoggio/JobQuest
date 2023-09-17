@@ -1,35 +1,53 @@
 import Card from "react-bootstrap/Card";
 import { useParams } from "react-router-dom";
+import {useEffect, useState} from "react";
+import {collection, onSnapshot, query, where} from "firebase/firestore";
+import {firestore} from "../../firebase";
+import {collections} from "../../enums/collections";
+import {useSelector} from "react-redux";
+import {selectUserId} from "../../store/userCredentials/userCredentialsSelectors";
 
 export default function JobDetails() {
+    const collectionRef = collection(firestore, collections.jobPostings);
+    const [job, setJob] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const userId = useSelector((state) => selectUserId(state));
+
+
     const { id } = useParams(); //docId
+    useEffect(() => {
+        const q = query(
+            collectionRef,
+            where('userId', '==', userId) // does not need index
+        );
+
+        setLoading(true);
+        const unsub = onSnapshot(collectionRef, (querySnapshot) => {
+            const items = [];
+            querySnapshot.forEach((doc) => {
+                items.push({ docId: doc.id, data: doc.data() });
+            });
+            setJob(items.find(item => item.docId === id));
+            setLoading(false);
+        });
+        return () => {
+            unsub();
+        };
+    }, []);
 
     return (
         <div className="d-flex justify-content-center align-items-center mt-5">
-            <Card style={{ width: "40rem" }}>
+            {job ? <Card style={{width: "40rem"}}>
                 <Card.Body>
-                    <Card.Title>Job Title</Card.Title>
-                    <Card.Text className="mb-2">Company Name</Card.Text>
+                    <Card.Title>{job.data.title}</Card.Title>
+                    <Card.Text className="mb-2">{job.data.companyName}</Card.Text>
                     <Card.Text className="mb-2">
-                        Join us for a 12-14 week paid internship that offers
-                        personal and professional development, an executive
-                        speaker series, and community-building. The Software
-                        Engineering Internship program will give you an
-                        opportunity to work on complex computer science
-                        solutions, develop scalable, distributed software
-                        systems, and also collaborate on multitudes of smaller
-                        projects that have universal appeal.We offer a range of
-                        internships in either Software Engineering or
-                        Site-Reliability Engineering across North America,
-                        including the US and Canada. Our recruitment team will
-                        determine where you fit best based on your resume.As a
-                        Software Engineering intern, you will work on a specific
-                        project critical to Google’s needs.
+                        job.data.description
                     </Card.Text>
-                    <Card.Text>Tags</Card.Text>
+                    <Card.Text>{job.data.tags}</Card.Text>
                 </Card.Body>
                 <Card.Footer className="text-muted">2 days ago</Card.Footer>
-            </Card>
+            </Card> : <div></div>}
         </div>
     );
 }
