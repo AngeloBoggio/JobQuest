@@ -1,6 +1,6 @@
 import "./Home.css";
 import { useEffect, useState } from "react";
-import { collection, onSnapshot, query, where } from "firebase/firestore";
+import { collection, onSnapshot, query } from "firebase/firestore";
 import { firestore } from "../../firebase";
 import { useSelector } from "react-redux";
 import { selectUserId } from "../../store/userCredentials/userCredentialsSelectors";
@@ -11,15 +11,13 @@ import { collections } from "../../enums/collections";
 export default function Home() {
     const [jobs, setJobs] = useState([]);
     const [searchInput, setSearchInput] = useState("");
+    const [filteredJobs, setFilteredJobs] = useState([]);
     const collectionRef = collection(firestore, collections.jobPostings);
     const userId = useSelector((state) => selectUserId(state));
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        const q = query(
-            collectionRef // does not need index
-        );
-
+        const q = query(collectionRef); // does not need index
         setLoading(true);
         const unsub = onSnapshot(collectionRef, (querySnapshot) => {
             const items = [];
@@ -34,13 +32,20 @@ export default function Home() {
         };
     }, []);
 
+    useEffect(() => {
+        const results = jobs.filter(job =>
+            job.data.title.toLowerCase().includes(searchInput.toLowerCase()) ||
+            job.data.companyName.toLowerCase().includes(searchInput.toLowerCase()) ||
+            job.data.description.toLowerCase().includes(searchInput.toLowerCase())
+        );
+        setFilteredJobs(results);
+    }, [searchInput, jobs]);
+
     function formatDate(timestamp) {
         const date = new Date(timestamp * 1000); // Convert seconds to milliseconds
 
         // Get the day of the month
         const day = date.getDate();
-
-        // Function to determine the day suffix
         function getDaySuffix(day) {
             if (day >= 11 && day <= 13) {
                 return "th";
@@ -84,7 +89,7 @@ export default function Home() {
                     Search
                 </button>
             </div>
-            {jobs.map((job, index) => (
+            {filteredJobs.map((job, index) => (
                 <div className="mb-4">
                     <Link
                         key={index}
