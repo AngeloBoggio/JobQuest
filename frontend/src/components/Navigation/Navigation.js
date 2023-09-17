@@ -1,7 +1,7 @@
 import "./Navigation.css";
 import Image from "react-bootstrap/Image";
 import Dropdown from "react-bootstrap/Dropdown";
-import {Link, useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import appLogo from "../../assets/app-logo.png";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
@@ -71,7 +71,7 @@ export default function Navigation() {
                         ) : (
                             <div>
                                 <Dropdown.Item as={Link} to={`/login`}>
-                                    Log In
+                                    Login
                                 </Dropdown.Item>
                                 <Dropdown.Item as={Link} to={`/register`}>
                                     Register

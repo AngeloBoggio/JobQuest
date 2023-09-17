@@ -12,6 +12,8 @@ import Swal from "sweetalert2";
 import store from "../../store/store";
 
 export default function RegisterForm() {
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
@@ -65,6 +67,32 @@ export default function RegisterForm() {
                 </div>
                 <h2 className="mb-4 text-center fs-5">Create an account</h2>
                 <form onSubmit={handleRegister}>
+                    <div className="mb-3">
+                        <label htmlFor="firstName" className="form-label w-100">
+                            First Name
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="firstName"
+                                value={firstName}
+                                onChange={(e) => setFirstName(e.target.value)}
+                                required
+                            />
+                        </label>
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="lastName" className="form-label w-100">
+                            Last Name
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="lastName"
+                                value={lastName}
+                                onChange={(e) => setLastName(e.target.value)}
+                                required
+                            />
+                        </label>
+                    </div>
                     <div className="mb-3">
                         <label htmlFor="email" className="form-label w-100">
                             Email

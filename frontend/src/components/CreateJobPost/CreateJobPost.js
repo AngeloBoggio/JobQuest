@@ -23,8 +23,7 @@ export default function CreateJobPost() {
     const [location, setLocation] = useState("");
     const [description, setDescription] = useState("");
     const [tags, setTags] = useState([]);
-    const [selectedVideos, setSelectedVideos] = useState([])
-
+    const [selectedVideos, setSelectedVideos] = useState([]);
 
     const addTag = () => {
         if (currentTag && !tags.includes(currentTag)) {
@@ -63,16 +62,16 @@ export default function CreateJobPost() {
         }
     };
     const closeJobCreationModal = () => {
-        setDescription('')
-        setLocation('')
-        setSalary('')
-        setTitle('')
-        setCompanyName('')
-        setSearchInput('')
+        setDescription("");
+        setLocation("");
+        setSalary("");
+        setTitle("");
+        setCompanyName("");
+        setSearchInput("");
         setShowCreatePost(false);
-        setSelectedVideos([])
+        setSelectedVideos([]);
         setTags([]);
-    }
+    };
     async function fetchYouTubeVideos(event) {
         event.preventDefault();
 
@@ -92,7 +91,7 @@ export default function CreateJobPost() {
         setSearchInput("");
     }
 
-    function handleAddVideo() { }
+    function handleAddVideo() {}
 
     return (
         <div>
@@ -290,11 +289,26 @@ export default function CreateJobPost() {
                                     <div className="d-flex align-items-center justify-content-center">
                                         <button
                                             className="btn btn-primary me-0 ms-0 mt-3 mb-3"
-                                            onClick={() => selectedVideos.includes(videoLink) ? setSelectedVideos(selectedVideos.filter(video => video !== videoLink)) :
-                                                setSelectedVideos([...selectedVideos, videoLink])
+                                            onClick={() =>
+                                                selectedVideos.includes(
+                                                    videoLink
+                                                )
+                                                    ? setSelectedVideos(
+                                                          selectedVideos.filter(
+                                                              (video) =>
+                                                                  video !==
+                                                                  videoLink
+                                                          )
+                                                      )
+                                                    : setSelectedVideos([
+                                                          ...selectedVideos,
+                                                          videoLink
+                                                      ])
                                             }
                                         >
-                                            {selectedVideos.includes(videoLink) ? 'Remove' : 'Add'}
+                                            {selectedVideos.includes(videoLink)
+                                                ? "Remove"
+                                                : "Add"}
                                         </button>
                                     </div>
                                 </div>
