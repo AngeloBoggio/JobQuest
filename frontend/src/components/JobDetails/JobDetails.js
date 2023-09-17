@@ -2,7 +2,7 @@ import "./JobDetails.css";
 import Card from "react-bootstrap/Card";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import {collection, deleteDoc, doc, onSnapshot, query, where} from "firebase/firestore";
+import { collection, deleteDoc, doc, onSnapshot, query, where } from "firebase/firestore";
 import { firestore } from "../../firebase";
 import { collections } from "../../enums/collections";
 import { useSelector } from "react-redux";
@@ -138,7 +138,8 @@ export default function JobDetails() {
                                 style={{ width: "200px", height: "200px" }}
                             />
                             <div className="d-flex flex-column">
-                                {job.data.userId === userId ? <EditJob job={job}/> : <div></div>}
+                                <Button variant="outline-primary" onClick={() => window.open(job.data.jobUrl, '_blank')}>Apply</Button>
+                                {job.data.userId === userId ? <EditJob job={job} /> : <div></div>}
                                 {job.data.userId === userId ? <Button variant="outline-danger" onClick={() => deletePost(job.docId)}>Delete</Button> : <div></div>}
                             </div>
                         </div>
