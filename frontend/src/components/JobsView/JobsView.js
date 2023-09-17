@@ -91,7 +91,7 @@ export default function JobsView() {
                     <Link
                         key={index}
                         className="nav-link"
-                        to={`/joblistings/${job.docId}`}
+                        to={`/jobs/${job.docId}`}
                     >
                         <Card key={index} style={{ width: "1000px" }}>
                             <div className="d-flex">

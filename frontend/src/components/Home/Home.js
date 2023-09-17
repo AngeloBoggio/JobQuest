@@ -98,13 +98,12 @@ export default function Home() {
                 </button>
             </div>
             {filteredJobs.map((job, index) => (
-                <div className="mb-4">
+                <div className="mb-4" key={job.docId}>
                     <Link
-                        key={index}
                         className="nav-link"
-                        to={`/joblistings/${job.docId}`}
+                        to={`/jobs/${job.docId}`}
                     >
-                        <Card key={index} style={{ width: "875px" }}>
+                        <Card style={{ width: "875px" }}>
                             <div className="d-flex">
                                 <img
                                     src={job.data.logoUrl}

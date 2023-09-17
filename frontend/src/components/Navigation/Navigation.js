@@ -61,8 +61,8 @@ export default function Navigation() {
                                 <Dropdown.Item as={Link} to={`/profile`}>
                                     Your Profile
                                 </Dropdown.Item>
-                                <Dropdown.Item as={Link} to={`/joblistings`}>
-                                    Job Listings
+                                <Dropdown.Item as={Link} to={`/myjobs`}>
+                                    My Jobs
                                 </Dropdown.Item>
                                 <Dropdown.Item onClick={handleSignOut}>
                                     Sign Out
