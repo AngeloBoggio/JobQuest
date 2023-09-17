@@ -9,6 +9,9 @@ import { useSelector } from "react-redux";
 import { selectUserId } from "../../store/userCredentials/userCredentialsSelectors";
 import Swal from "sweetalert2";
 import { collections } from "../../enums/collections";
+import {ref, uploadBytes, getStorage, getDownloadURL, listAll} from "firebase/storage"
+import {v4} from "uuid"
+
 
 export default function CreateJobPost() {
     const [showCreatePost, setShowCreatePost] = useState(false);
@@ -16,7 +19,7 @@ export default function CreateJobPost() {
     const userId = useSelector((state) => selectUserId(state));
     const [searchInput, setSearchInput] = useState("");
     const [videos, setVideos] = useState([]);
-    const ref = collection(firestore, collections.jobPostings);
+    const collectionRef = collection(firestore, collections.jobPostings);
     const [companyName, setCompanyName] = useState("");
     const [title, setTitle] = useState("");
     const [salary, setSalary] = useState("");
@@ -24,13 +27,17 @@ export default function CreateJobPost() {
     const [description, setDescription] = useState("");
     const [tags, setTags] = useState([]);
     const [selectedVideos, setSelectedVideos] = useState([]);
-
+    const [selectedLogo, setSelectedLogo] = useState(null)
+    const storage = getStorage()
+    const logoListRef = ref(storage, "logos/")
     const addTag = () => {
         if (currentTag && !tags.includes(currentTag)) {
             setTags([...tags, currentTag]);
             setCurrentTag("");
         }
     };
+
+
 
     const removeTag = (removedTag) => {
         setTags(tags.filter((tag) => tag !== removedTag));
@@ -39,24 +46,30 @@ export default function CreateJobPost() {
     const createPost = async (event) => {
         event.preventDefault();
         try {
-            await addDoc(ref, {
-                title: title,
-                tags: tags,
-                description: description,
-                userId: userId,
-                companyName: companyName,
-                salary: salary,
-                location: location,
-                videos: selectedVideos,
-                createdDate: serverTimestamp()
-            });
-            Swal.fire({
-                icon: "success",
-                title: "You have succesfully posted a new job!",
-                showConfirmButton: false,
-                timer: 1500
-            });
-            closeJobCreationModal();
+            const url = selectedLogo.name + v4();
+            const logoRef = ref(storage, `logos/${url}`)
+            uploadBytes(logoRef, selectedLogo).then(response =>
+                getDownloadURL(response.ref).then( async url => {
+                    await addDoc(collectionRef, {
+                        title: title,
+                        tags: tags,
+                        description: description,
+                        userId: userId,
+                        companyName: companyName,
+                        salary: salary,
+                        location: location,
+                        videos: selectedVideos,
+                        createdDate: serverTimestamp(),
+                        logoUrl: url
+                    });
+                    Swal.fire({
+                        icon: "success",
+                        title: "You have succesfully posted a new job!",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    closeJobCreationModal();
+            }))
         } catch (e) {
             console.log(e);
         }
@@ -242,6 +255,9 @@ export default function CreateJobPost() {
                                             </div>
                                         ))}
                                     </div>
+                                    <input onChange={(event) =>
+                                        setSelectedLogo(event.target.files[0])
+                                    } type="file" accept="image/jpeg, image/png, image/jpg"/>
                                 </div>
                                 <form
                                     onSubmit={(event) =>
