@@ -85,7 +85,7 @@ export default function EditPost({ job }) {
                     location: location,
                     videos: selectedVideos,
                     createdDate: serverTimestamp(),
-                    logoUrl: null
+                    logoUrl: job.logoUrl
                 };
 
                 try {
@@ -107,15 +107,8 @@ export default function EditPost({ job }) {
         }
     };
     const closeJobCreationModal = () => {
-        setDescription("");
-        setLocation("");
-        setSalary("");
-        setTitle("");
-        setCompanyName("");
         setSearchInput("");
         setShowEditPost(false);
-        setSelectedVideos([]);
-        setTags([]);
     };
     async function fetchYouTubeVideos(event) {
         event.preventDefault();
