@@ -91,8 +91,6 @@ export default function CreateJobPost() {
         setSearchInput("");
     }
 
-    function handleAddVideo() {}
-
     return (
         <div>
             <div className="d-flex justify-content-center">
@@ -159,11 +157,11 @@ export default function CreateJobPost() {
                                         Salary
                                     </label>
                                     <input
-                                        type="text"
+                                        type="number"
                                         className="form-control"
                                         id="job-title"
                                         required
-                                        value={salary}
+                                        value={salary.toString()}
                                         onChange={(event) =>
                                             setSalary(event.target.value)
                                         }
@@ -294,16 +292,16 @@ export default function CreateJobPost() {
                                                     videoLink
                                                 )
                                                     ? setSelectedVideos(
-                                                          selectedVideos.filter(
-                                                              (video) =>
-                                                                  video !==
-                                                                  videoLink
-                                                          )
-                                                      )
+                                                        selectedVideos.filter(
+                                                            (video) =>
+                                                                video !==
+                                                                videoLink
+                                                        )
+                                                    )
                                                     : setSelectedVideos([
-                                                          ...selectedVideos,
-                                                          videoLink
-                                                      ])
+                                                        ...selectedVideos,
+                                                        videoLink
+                                                    ])
                                             }
                                         >
                                             {selectedVideos.includes(videoLink)

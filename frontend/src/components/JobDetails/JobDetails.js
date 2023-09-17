@@ -102,7 +102,7 @@ export default function JobDetails() {
                                     </Card.Text>
                                 ))}
                             </div>
-                            <p className="mt-3 mb-3 m-0">Learn these skills to land the job!</p>
+                            {job.data.videos.length > 0 ? <p className="mt-3 mb-3 m-0">Learn these skills to land the job!</p> : null}
                             <div className="row">
                                 {job.data.videos.map((video, index) => (
                                     <div key={index} className="col-md-6 mb-3">
@@ -120,7 +120,7 @@ export default function JobDetails() {
                         </Card.Body>
                     </div>
                     <Card.Footer>
-                        Posted on {formatDate(job.data.createdDate)}
+                        Posted on {formatDate(job.data.createdDate?.seconds)}
                     </Card.Footer>
                 </Card >
             </div >) : null
