@@ -25,6 +25,7 @@ export default function CreateJobPost() {
     const [salary, setSalary] = useState("");
     const [location, setLocation] = useState("");
     const [description, setDescription] = useState("");
+    const [jobUrl, setJobUrl] = useState("");
     const [tags, setTags] = useState([]);
     const [selectedVideos, setSelectedVideos] = useState([]);
     const [selectedLogo, setSelectedLogo] = useState(null)
@@ -110,7 +111,7 @@ export default function CreateJobPost() {
     };
     async function fetchYouTubeVideos(event) {
         event.preventDefault();
-       if(searchInput) {
+        if (searchInput) {
 
             const apiKey = "AIzaSyAS5kAv_0GoEWPNS8eEirVaJB-EyeS8PXU";
             const maxResults = 10;
@@ -239,6 +240,24 @@ export default function CreateJobPost() {
                                         value={description}
                                         onChange={(event) =>
                                             setDescription(event.target.value)
+                                        }
+                                    />
+                                </div>
+                                <div className="mb-3">
+                                    <label
+                                        htmlFor="job-url"
+                                        className="form-label"
+                                    >
+                                        Job Application URL
+                                    </label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        id="job-url"
+                                        required
+                                        value={jobUrl}
+                                        onChange={(event) =>
+                                            setJobUrl(event.target.value)
                                         }
                                     />
                                 </div>
@@ -376,3 +395,4 @@ export default function CreateJobPost() {
         </div>
     );
 }
+
