@@ -10,12 +10,14 @@ import { selectUserId } from "../../store/userCredentials/userCredentialsSelecto
 import Button from 'react-bootstrap/Button';
 import EditJob from "../EditJob/EditJob";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 export default function JobDetails() {
     const collectionRef = collection(firestore, collections.jobPostings);
     const [job, setJob] = useState(null);
     const [loading, setLoading] = useState(false);
     const userId = useSelector((state) => selectUserId(state));
+    const navigate = useNavigate();
 
 
     const { id } = useParams(); //docId
@@ -118,7 +120,7 @@ export default function JobDetails() {
                         'Your job has been deleted!',
                         'success'
                     )
-                    // Do something with database here Cruz
+                    navigate("/myjobs");
                 }
             })
         } catch (error) {

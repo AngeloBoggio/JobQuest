@@ -1,5 +1,4 @@
 import "./Profile.css";
-import Card from "react-bootstrap/Card";
 import { useSelector } from "react-redux";
 import {
     doc,
@@ -19,6 +18,8 @@ import { firestore } from "../../firebase";
 import { collections } from "../../enums/collections";
 import { useState, useEffect } from "react";
 import { selectUserId } from "../../store/userCredentials/userCredentialsSelectors";
+import Card from "react-bootstrap/Card";
+import ListGroup from "react-bootstrap/ListGroup";
 
 export default function Profile() {
     const collectionRef = collection(firestore, collections.users);
@@ -49,18 +50,18 @@ export default function Profile() {
     return (
         <div className="d-flex justify-content-center align-items-center flex-column">
             <div className="profile-card mt-5">
-                <h1 className="profile-header mb-2">My Profile</h1>
-                {user ? <Card className="custom-card">
-                    <Card.Img
-                        variant="top"
-                        src="https://i.etsystatic.com/5215360/r/il/03b263/1284577071/il_1080xN.1284577071_iv53.jpg"
-                    />
+                <Card>
+                    <Card.Img variant="top" src="https://cdn.discordapp.com/attachments/1008571169580003338/1152822562619916378/jpgtheartist_image_of_a_capybara_in_a_detectors_outfit_12385ffe-1f9d-4303-b528-e95a14eab95d.png" />
                     <Card.Body className="text-center">
+                        <Card.Title className="m-0">
+                            {user.firstName}{" "}{user.lastName}
+                        </Card.Title>
                     </Card.Body>
-                </Card> : <div></div>}
+                    <ListGroup className="list-group-flush text-center">
+                        <ListGroup.Item>{user.email}</ListGroup.Item>
+                    </ListGroup>
+                </Card>
             </div>
-            <div className="firstName mt-2">Name: {user.firstName + " " + user.lastName}</div>
-            <div className="email">Email: {user.email}</div>
         </div>
     );
 }
