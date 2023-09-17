@@ -26,6 +26,7 @@ export default function Home() {
             querySnapshot.forEach((doc) => {
                 items.push({ docId: doc.id, data: doc.data() });
             });
+            items.sort((a, b) => b.data.createdDate.seconds - a.data.createdDate.seconds);
             setJobs(items);
             setLoading(false);
         });
@@ -105,7 +106,7 @@ export default function Home() {
                                                 {job.data.companyName})
                                             </p>
                                             <p className="m-0">
-                                                Salary: {job.data.salary}
+                                                Salary: {Number(job.data.salary).toLocaleString("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 2 })}
                                             </p>
                                         </div>
                                     </Card.Title>

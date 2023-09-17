@@ -29,7 +29,7 @@ export default function JobsView() {
     useEffect(() => {
         const q = query(
             collectionRef,
-            where("userId", "==", userId) // does not need index
+            where("userId", "==", userId)
         );
 
         setLoading(true);
@@ -38,6 +38,7 @@ export default function JobsView() {
             querySnapshot.forEach((doc) => {
                 items.push({ docId: doc.id, data: doc.data() });
             });
+            items.sort((a, b) => b.data.createdDate.seconds - a.data.createdDate.seconds);
             setJobs(items.filter((item) => item.data.userId === userId));
             setLoading(false);
         });
@@ -77,7 +78,7 @@ export default function JobsView() {
     }
 
     return (
-        <div className="d-flex justify-content-center align-items-center">
+        <div className="d-flex flex-column justify-content-center align-items-center">
             {jobs.map((job, index) => (
                 <div className="mb-4">
                     <Link
@@ -99,7 +100,7 @@ export default function JobsView() {
                                                 {job.data.companyName})
                                             </p>
                                             <p className="m-0">
-                                                Salary: {job.data.salary}
+                                                Salary: {Number(job.data.salary).toLocaleString("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 2 })}
                                             </p>
                                         </div>
                                     </Card.Title>
@@ -119,7 +120,7 @@ export default function JobsView() {
                                 </Card.Body>
                             </div>
                             <Card.Footer>
-                                Posted on {formatDate(job.data.createdDate)}
+                                Posted on {formatDate(job.data.createdDate.seconds)}
                             </Card.Footer>
                         </Card>
                     </Link>
