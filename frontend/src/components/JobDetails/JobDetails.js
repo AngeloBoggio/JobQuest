@@ -138,9 +138,9 @@ export default function JobDetails() {
                                 style={{ width: "200px", height: "200px" }}
                             />
                             <div className="d-flex flex-column">
-                                <Button variant="outline-primary" onClick={() => window.open(job.data.jobUrl, '_blank')}>Apply</Button>
-                                {job.data.userId === userId ? <EditJob job={job} /> : <div></div>}
-                                {job.data.userId === userId ? <Button variant="outline-danger" onClick={() => deletePost(job.docId)}>Delete</Button> : <div></div>}
+                                <Button className="option-buttons" variant="outline-primary" onClick={() => window.open(job.data.jobUrl, '_blank')}>Apply</Button>
+                                {job.data.userId === userId ? <EditJob className="edit-button" job={job} /> : <div></div>}
+                                {job.data.userId === userId ? <Button className="option-buttons" variant="outline-danger" onClick={() => deletePost(job.docId)}>Delete</Button> : <div></div>}
                             </div>
                         </div>
                         <Card.Body className="ps-0">
