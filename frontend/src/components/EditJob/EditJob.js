@@ -3,7 +3,7 @@ import "./EditJob.css";
 import Button from "react-bootstrap/esm/Button";
 import Modal from "react-bootstrap/Modal";
 import { firestore } from "../../firebase";
-import {addDoc, collection, doc, serverTimestamp, updateDoc} from "firebase/firestore";
+import { addDoc, collection, doc, serverTimestamp, updateDoc } from "firebase/firestore";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { selectUserId } from "../../store/userCredentials/userCredentialsSelectors";
@@ -13,7 +13,7 @@ import { ref, uploadBytes, getStorage, getDownloadURL, listAll } from "firebase/
 import { v4 } from "uuid"
 
 
-export default function EditPost({ job }) {
+export default function EditJob({ job }) {
     const [showEditPost, setShowEditPost] = useState(false);
     const [currentTag, setCurrentTag] = useState("");
     const userId = useSelector((state) => selectUserId(state));
@@ -25,6 +25,7 @@ export default function EditPost({ job }) {
     const [salary, setSalary] = useState(job.data.salary);
     const [location, setLocation] = useState(job.data.location);
     const [description, setDescription] = useState(job.data.description);
+    const [jobUrl, setJobUrl] = useState("");
     const [tags, setTags] = useState(job.data.tags);
     const [selectedVideos, setSelectedVideos] = useState(job.data.videos);
     const [selectedLogo, setSelectedLogo] = useState(null)
@@ -44,37 +45,39 @@ export default function EditPost({ job }) {
     const editPost = async (event) => {
         event.preventDefault();
         try {
-            if(selectedLogo) {const url = selectedLogo.name + v4();
-            const logoRef = ref(storage, `logos/${url}`)
-            uploadBytes(logoRef, selectedLogo).then(response =>
-                getDownloadURL(response.ref).then(async url => {
-                    const updatedJob = {
-                        title: title,
-                        tags: tags,
-                        description: description,
-                        userId: userId,
-                        companyName: companyName,
-                        salary: salary,
-                        location: location,
-                        videos: selectedVideos,
-                        createdDate: serverTimestamp(),
-                        logoUrl: url
-                    };
+            if (selectedLogo) {
+                const url = selectedLogo.name + v4();
+                const logoRef = ref(storage, `logos/${url}`)
+                uploadBytes(logoRef, selectedLogo).then(response =>
+                    getDownloadURL(response.ref).then(async url => {
+                        const updatedJob = {
+                            title: title,
+                            tags: tags,
+                            description: description,
+                            userId: userId,
+                            companyName: companyName,
+                            salary: salary,
+                            location: location,
+                            videos: selectedVideos,
+                            createdDate: serverTimestamp(),
+                            logoUrl: url
+                        };
 
-                    try {
-                        const documentRef = doc(collectionRef, job.docId);
-                        await updateDoc(documentRef, updatedJob);
-                    } catch (error) {
-                        console.error(error);
-                    }
-                    Swal.fire({
-                        icon: "success",
-                        title: "You have succesfully updated your job!",
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                    closeJobCreationModal();
-                }))} else {
+                        try {
+                            const documentRef = doc(collectionRef, job.docId);
+                            await updateDoc(documentRef, updatedJob);
+                        } catch (error) {
+                            console.error(error);
+                        }
+                        Swal.fire({
+                            icon: "success",
+                            title: "You have succesfully updated your job!",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        closeJobCreationModal();
+                    }))
+            } else {
                 const updatedJob = {
                     title: title,
                     tags: tags,
@@ -243,6 +246,24 @@ export default function EditPost({ job }) {
                             </div>
                             <div className="mb-3">
                                 <label
+                                    htmlFor="job-url"
+                                    className="form-label"
+                                >
+                                    Job Application URL
+                                </label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id="job-url"
+                                    required
+                                    value={jobUrl}
+                                    onChange={(event) =>
+                                        setJobUrl(event.target.value)
+                                    }
+                                />
+                            </div>
+                            <div className="mb-3">
+                                <label
                                     htmlFor="job-tags"
                                     className="form-label"
                                 >
@@ -374,3 +395,4 @@ export default function EditPost({ job }) {
         </div>
     );
 }
+
