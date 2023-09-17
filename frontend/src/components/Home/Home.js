@@ -34,11 +34,18 @@ export default function Home() {
     }, []);
 
     useEffect(() => {
-        const results = jobs.filter(job =>
-            job.data.title.toLowerCase().includes(searchInput.toLowerCase()) ||
-            job.data.companyName.toLowerCase().includes(searchInput.toLowerCase()) ||
-            job.data.description.toLowerCase().includes(searchInput.toLowerCase())
-        );
+        const results = jobs.filter((job) => {
+            const lowercaseSearch = searchInput.toLowerCase();
+
+            const titleMatch = job.data.title.toLowerCase().includes(lowercaseSearch);
+            const companyNameMatch = job.data.companyName.toLowerCase().includes(lowercaseSearch);
+            const descriptionMatch = job.data.description.toLowerCase().includes(lowercaseSearch);
+            const tagMatch = job.data.tags.some((tag) =>
+                tag.toLowerCase().includes(lowercaseSearch)
+            );
+
+            return titleMatch || companyNameMatch || descriptionMatch || tagMatch;
+        });
         setFilteredJobs(results);
     }, [searchInput, jobs]);
 
