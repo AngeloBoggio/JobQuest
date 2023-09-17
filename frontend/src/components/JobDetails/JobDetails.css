@@ -8,3 +8,14 @@
     border: 3px solid black;
     border-radius: 15px;
 }
+
+.option-buttons {
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+    margin-left: 1rem;
+}
+
+.edit-button {
+    width: 92% !important;
+    margin-left: 1rem;
+}

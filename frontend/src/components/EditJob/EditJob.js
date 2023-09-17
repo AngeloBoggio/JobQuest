@@ -137,7 +137,7 @@ export default function EditJob({ job }) {
     return (
         <div>
             <Button
-                className="mb-2 mt-2 w-100"
+                className="edit-button"
                 variant="outline-success"
                 onClick={() => setShowEditPost(true)}
             >
