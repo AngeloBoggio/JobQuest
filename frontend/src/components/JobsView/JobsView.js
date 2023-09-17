@@ -30,6 +30,7 @@ export default function JobsView() {
         const q = query(
             collectionRef,
             where("userId", "==", userId)
+            where("userId", "==", userId)
         );
 
         setLoading(true);
@@ -38,7 +39,7 @@ export default function JobsView() {
             querySnapshot.forEach((doc) => {
                 items.push({ docId: doc.id, data: doc.data() });
             });
-            items.sort((a, b) => b.data.createdDate.seconds - a.data.createdDate.seconds);
+            items.sort((a, b) => b.data.createdDate?.seconds - a.data.createdDate?.seconds);
             setJobs(items.filter((item) => item.data.userId === userId));
             setLoading(false);
         });
@@ -77,9 +78,16 @@ export default function JobsView() {
         return `${formattedDate} ${day}${daySuffix}`;
     }
 
+    function truncateTextWithEllipses(text, maxLength) {
+        if (text.length <= maxLength) {
+            return text;
+        }
+        return text.substring(0, maxLength - 3) + "…"; // Append ellipses
+    }
+
     return (
         <div className="d-flex flex-column justify-content-center align-items-center">
-            {jobs.map((job, index) => (
+            {jobs?.map((job, index) => (
                 <div className="mb-4">
                     <Link
                         key={index}
@@ -89,7 +97,7 @@ export default function JobsView() {
                         <Card key={index} style={{ width: "1000px" }}>
                             <div className="d-flex">
                                 <img
-                                    src="https://expresswriters.com/wp-content/uploads/2015/09/google-new-logo-450x450.jpg"
+                                    src={job.data.logoUrl}
                                     style={{ width: "200px", height: "200px" }}
                                 />
                                 <Card.Body>
@@ -101,6 +109,7 @@ export default function JobsView() {
                                             </p>
                                             <p className="m-0">
                                                 Salary: {Number(job.data.salary).toLocaleString("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 2 })}
+                                                Salary: {Number(job.data.salary).toLocaleString("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 2 })}
                                             </p>
                                         </div>
                                     </Card.Title>
@@ -108,7 +117,7 @@ export default function JobsView() {
                                         Location: {job.data.location}
                                     </Card.Text>
                                     <Card.Text className="mb-2">
-                                        Description: {job.data.description}
+                                        Description: {truncateTextWithEllipses(job.data.description, 300)}
                                     </Card.Text>
                                     <div className="d-flex">
                                         {job.data.tags.map((tag) => (
@@ -120,7 +129,7 @@ export default function JobsView() {
                                 </Card.Body>
                             </div>
                             <Card.Footer>
-                                Posted on {formatDate(job.data.createdDate.seconds)}
+                                Posted on {formatDate(job.data.createdDate?.seconds)}
                             </Card.Footer>
                         </Card>
                     </Link>
