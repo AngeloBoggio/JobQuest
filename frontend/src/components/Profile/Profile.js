@@ -17,7 +17,7 @@ import {
 } from "firebase/firestore";
 import { firestore } from "../../firebase";
 import { collections } from "../../enums/collections";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { selectUserId } from "../../store/userCredentials/userCredentialsSelectors";
 
 export default function Profile() {
@@ -37,7 +37,7 @@ export default function Profile() {
             querySnapshot.forEach((doc) => {
                 items.push({ docId: doc.id, data: doc.data() });
             });
-            
+
             setUser(items.find(user => user.data.userId === userId).data);
             setLoading(false);
         });
@@ -47,9 +47,9 @@ export default function Profile() {
     }, []);
 
     return (
-        <div className="d-flex justify-content-center align-items-center flex-column"> 
+        <div className="d-flex justify-content-center align-items-center flex-column">
             <div className="profile-card mt-5">
-                <h1 className="profile-header">Profile</h1>
+                <h1 className="profile-header mb-2">My Profile</h1>
                 {user ? <Card className="custom-card">
                     <Card.Img
                         variant="top"
@@ -59,8 +59,8 @@ export default function Profile() {
                     </Card.Body>
                 </Card> : <div></div>}
             </div>
-            <div className="email">{user.email}</div>
-            <div className="firstName">{user.firstName + " " + user.lastName}</div>
+            <div className="firstName mt-2">Name: {user.firstName + " " + user.lastName}</div>
+            <div className="email">Email: {user.email}</div>
         </div>
     );
 }
