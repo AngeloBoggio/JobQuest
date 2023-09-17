@@ -3,7 +3,7 @@ import "./EditJob.css";
 import Button from "react-bootstrap/esm/Button";
 import Modal from "react-bootstrap/Modal";
 import { firestore } from "../../firebase";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import {addDoc, collection, doc, serverTimestamp, updateDoc} from "firebase/firestore";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { selectUserId } from "../../store/userCredentials/userCredentialsSelectors";
@@ -41,14 +41,14 @@ export default function EditPost({ job }) {
         setTags(tags.filter((tag) => tag !== removedTag));
     };
 
-    const createPost = async (event) => {
+    const editPost = async (event) => {
         event.preventDefault();
         try {
-            const url = selectedLogo.name + v4();
+            if(selectedLogo) {const url = selectedLogo.name + v4();
             const logoRef = ref(storage, `logos/${url}`)
             uploadBytes(logoRef, selectedLogo).then(response =>
                 getDownloadURL(response.ref).then(async url => {
-                    await addDoc(collectionRef, {
+                    const updatedJob = {
                         title: title,
                         tags: tags,
                         description: description,
@@ -59,15 +59,49 @@ export default function EditPost({ job }) {
                         videos: selectedVideos,
                         createdDate: serverTimestamp(),
                         logoUrl: url
-                    });
+                    };
+
+                    try {
+                        const documentRef = doc(collectionRef, job.docId);
+                        await updateDoc(documentRef, updatedJob);
+                    } catch (error) {
+                        console.error(error);
+                    }
                     Swal.fire({
                         icon: "success",
-                        title: "You have succesfully posted a new job!",
+                        title: "You have succesfully updated your job!",
                         showConfirmButton: false,
                         timer: 1500
                     });
                     closeJobCreationModal();
-                }))
+                }))} else {
+                const updatedJob = {
+                    title: title,
+                    tags: tags,
+                    description: description,
+                    userId: userId,
+                    companyName: companyName,
+                    salary: salary,
+                    location: location,
+                    videos: selectedVideos,
+                    createdDate: serverTimestamp(),
+                    logoUrl: null
+                };
+
+                try {
+                    const documentRef = doc(collectionRef, job.docId);
+                    await updateDoc(documentRef, updatedJob);
+                } catch (error) {
+                    console.error(error);
+                }
+                Swal.fire({
+                    icon: "success",
+                    title: "You have succesfully updated your job!",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                closeJobCreationModal();
+            }
         } catch (e) {
             console.log(e);
         }
@@ -338,7 +372,7 @@ export default function EditPost({ job }) {
                     <Button
                         variant="primary"
                         type="submit"
-                        onClick={createPost}
+                        onClick={editPost}
                     >
                         Edit
                     </Button>

@@ -2,7 +2,7 @@ import "./JobDetails.css";
 import Card from "react-bootstrap/Card";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { collection, onSnapshot, query, where } from "firebase/firestore";
+import {collection, deleteDoc, doc, onSnapshot, query, where} from "firebase/firestore";
 import { firestore } from "../../firebase";
 import { collections } from "../../enums/collections";
 import { useSelector } from "react-redux";
@@ -99,25 +99,32 @@ export default function JobDetails() {
         return `${formattedDate} ${day}${daySuffix}`;
     }
 
-    function deletePost() {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, remove this Job.'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                Swal.fire(
-                    'Job Removed',
-                    'Your job has been deleted!',
-                    'success'
-                )
-                // Do something with database here Cruz
-            }
-        })
+    const deletePost = (docId) => {
+        try {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, remove this Job.'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    const documentRef = doc(collectionRef, docId);
+                    await deleteDoc(documentRef);
+                    Swal.fire(
+                        'Job Removed',
+                        'Your job has been deleted!',
+                        'success'
+                    )
+                    // Do something with database here Cruz
+                }
+            })
+        } catch (error) {
+            console.error(error);
+        }
+
     }
 
     return (
@@ -132,7 +139,7 @@ export default function JobDetails() {
                             />
                             <div className="d-flex flex-column">
                                 <EditJob job={job} />
-                                <Button variant="outline-danger" onClick={deletePost}>Delete</Button>
+                                <Button variant="outline-danger" onClick={() => deletePost(job.docId)}>Delete</Button>
                             </div>
                         </div>
                         <Card.Body className="ps-0">

@@ -44,6 +44,7 @@ export default function CreateJobPost() {
     const createPost = async (event) => {
         event.preventDefault();
         try {
+            if(selectedLogo) {
             const url = selectedLogo.name + v4();
             const logoRef = ref(storage, `logos/${url}`)
             uploadBytes(logoRef, selectedLogo).then(response =>
@@ -67,7 +68,27 @@ export default function CreateJobPost() {
                         timer: 1500
                     });
                     closeJobCreationModal();
-                }))
+                }))} else {
+                await addDoc(collectionRef, {
+                    title: title,
+                    tags: tags,
+                    description: description,
+                    userId: userId,
+                    companyName: companyName,
+                    salary: salary,
+                    location: location,
+                    videos: selectedVideos,
+                    createdDate: serverTimestamp(),
+                    logoUrl: null
+                });
+                Swal.fire({
+                    icon: "success",
+                    title: "You have succesfully posted a new job!",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                closeJobCreationModal();
+            }
         } catch (e) {
             console.log(e);
         }
