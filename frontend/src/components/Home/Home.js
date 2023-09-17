@@ -70,6 +70,13 @@ export default function Home() {
         return `${formattedDate} ${day}${daySuffix}`;
     }
 
+    function truncateTextWithEllipses(text, maxLength) {
+        if (text.length <= maxLength) {
+            return text;
+        }
+        return text.substring(0, maxLength - 3) + "…"; // Append ellipses
+    }
+
     return (
         <div className="container mt-3" style={{ width: "900px" }}>
             <div className="input-group mb-3">
@@ -119,7 +126,7 @@ export default function Home() {
                                         Location: {job.data.location}
                                     </Card.Text>
                                     <Card.Text className="mb-2">
-                                        Description: {job.data.description}
+                                        Description: {truncateTextWithEllipses(job.data.description, 300)}
                                     </Card.Text>
                                     <div className="d-flex">
                                         {job.data.tags.map((tag) => (

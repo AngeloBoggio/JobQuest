@@ -77,6 +77,13 @@ export default function JobsView() {
         return `${formattedDate} ${day}${daySuffix}`;
     }
 
+    function truncateTextWithEllipses(text, maxLength) {
+        if (text.length <= maxLength) {
+            return text;
+        }
+        return text.substring(0, maxLength - 3) + "…"; // Append ellipses
+    }
+
     return (
         <div className="d-flex flex-column justify-content-center align-items-center">
             {jobs?.map((job, index) => (
@@ -108,7 +115,7 @@ export default function JobsView() {
                                         Location: {job.data.location}
                                     </Card.Text>
                                     <Card.Text className="mb-2">
-                                        Description: {job.data.description}
+                                        Description: {truncateTextWithEllipses(job.data.description, 300)}
                                     </Card.Text>
                                     <div className="d-flex">
                                         {job.data.tags.map((tag) => (
