@@ -10,6 +10,10 @@ import {
 import { auth } from "../../firebase";
 import Swal from "sweetalert2";
 import store from "../../store/store";
+import { firestore } from "../../firebase";
+import { collections } from "../../enums/collections";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+
 
 export default function RegisterForm() {
     const [firstName, setFirstName] = useState("");
@@ -17,18 +21,30 @@ export default function RegisterForm() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
+    const ref = collection(firestore, collections.users);
 
     const handleRegister = (e) => {
         e.preventDefault();
         createUserWithEmailAndPassword(auth, email, password)
             .then(() => {
                 signInWithEmailAndPassword(auth, email, password)
-                    .then((credentials) => {
+                    .then(async(credentials) => {
+                        const userCredentials = {
+                            userId: credentials.user.uid
+                        };
                         store.dispatch({
                             type: "userCredentials/setUserCredentials",
-                            payload: { userId: credentials.user.uid }
+                            payload: userCredentials
                         });
+                        localStorage.setItem("userId", JSON.stringify(userCredentials));
                         navigate("/home");
+                        await addDoc(ref, {
+                            firstName:firstName,
+                            lastName:lastName,
+                            userId:credentials.user.uid,
+                            email:email,
+                            joinDate:serverTimestamp(),
+                        });
                     })
                     .catch((error) => {
                         if (error.code === "auth/invalid-login-credentials") {

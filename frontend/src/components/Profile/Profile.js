@@ -1,24 +1,67 @@
 import "./Profile.css";
 import Card from "react-bootstrap/Card";
 import { useSelector } from "react-redux";
-import { selectUserEmail } from "../../store/userCredentials/userCredentialsSelectors";
+import {
+    doc,
+    onSnapshot,
+    updateDoc,
+    setDoc,
+    deleteDoc,
+    collection,
+    serverTimestamp,
+    getDocs,
+    query,
+    where,
+    orderBy,
+    limit
+} from "firebase/firestore";
+import { firestore } from "../../firebase";
+import { collections } from "../../enums/collections";
+import { useState,useEffect } from "react";
+import { selectUserId } from "../../store/userCredentials/userCredentialsSelectors";
 
 export default function Profile() {
-    const userEmail = useSelector((state) => selectUserEmail(state));
+    const collectionRef = collection(firestore, collections.users);
+    const [user, setUser] = useState([]);
+    const userId = useSelector((state) => selectUserId(state));
+    const [loading, setLoading] = useState(false);
+    useEffect(() => {
+        const q = query(
+            collectionRef,
+            where("userId", "==", userId)
+        );
+
+        setLoading(true);
+        const unsub = onSnapshot(collectionRef, (querySnapshot) => {
+            const items = [];
+            querySnapshot.forEach((doc) => {
+                items.push({ docId: doc.id, data: doc.data() });
+            });
+            
+            setUser(items.find(user => user.data.userId === userId).data);
+            setLoading(false);
+        });
+        return () => {
+            unsub();
+        };
+    }, []);
 
     return (
-        <div className="d-flex justify-content-center align-items-center flex-column">
+        <div className="d-flex justify-content-center align-items-center flex-column"> 
             <div className="profile-card mt-5">
-                <Card>
+                <h1 className="profile-header">Profile</h1>
+                {user ? <Card className="custom-card">
                     <Card.Img
                         variant="top"
-                        src="https://t3.ftcdn.net/jpg/00/64/67/52/360_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg"
+                        src="https://i.etsystatic.com/5215360/r/il/03b263/1284577071/il_1080xN.1284577071_iv53.jpg"
                     />
                     <Card.Body className="text-center">
-                        <Card.Title className="m-0">{userEmail}</Card.Title>
                     </Card.Body>
-                </Card>
+                </Card> : <div></div>}
             </div>
+            <div className="email">{user.email}</div>
+            <div className="firstName">{user.firstName + " " + user.lastName}</div>
         </div>
     );
 }
+
