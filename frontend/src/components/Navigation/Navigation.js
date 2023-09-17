@@ -59,7 +59,7 @@ export default function Navigation() {
                         {userId ? (
                             <div>
                                 <Dropdown.Item as={Link} to={`/profile`}>
-                                    Your Profile
+                                    Profile
                                 </Dropdown.Item>
                                 <Dropdown.Item as={Link} to={`/myjobs`}>
                                     My Jobs
