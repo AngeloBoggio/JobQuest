@@ -26,6 +26,12 @@ export default function LoginForm() {
                 });
                 localStorage.setItem("userId", JSON.stringify(userCredentials));
                 navigate("/home");
+                Swal.fire({
+                    icon: "success",
+                    title: "You have successfully logged in!",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
             })
             .catch((error) => {
                 if (

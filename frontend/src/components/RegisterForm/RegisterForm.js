@@ -28,7 +28,7 @@ export default function RegisterForm() {
         createUserWithEmailAndPassword(auth, email, password)
             .then(() => {
                 signInWithEmailAndPassword(auth, email, password)
-                    .then(async(credentials) => {
+                    .then(async (credentials) => {
                         const userCredentials = {
                             userId: credentials.user.uid
                         };
@@ -38,12 +38,18 @@ export default function RegisterForm() {
                         });
                         localStorage.setItem("userId", JSON.stringify(userCredentials));
                         navigate("/home");
+                        Swal.fire({
+                            icon: "success",
+                            title: "You have successfully signed up!",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
                         await addDoc(ref, {
-                            firstName:firstName,
-                            lastName:lastName,
-                            userId:credentials.user.uid,
-                            email:email,
-                            joinDate:serverTimestamp(),
+                            firstName: firstName,
+                            lastName: lastName,
+                            userId: credentials.user.uid,
+                            email: email,
+                            joinDate: serverTimestamp(),
                         });
                     })
                     .catch((error) => {
