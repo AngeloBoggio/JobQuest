@@ -98,7 +98,7 @@ export default function Home() {
                 </button>
             </div>
             {filteredJobs.map((job, index) => (
-                <div className="mb-4" key={job.docId}>
+                <div className="mb-4" key={index}>
                     <Link
                         className="nav-link"
                         to={`/jobs/${job.docId}`}
@@ -128,8 +128,8 @@ export default function Home() {
                                         Description: {truncateTextWithEllipses(job.data.description, 300)}
                                     </Card.Text>
                                     <div className="d-flex">
-                                        {job.data.tags.map((tag) => (
-                                            <Card.Text className="m-0 me-2">
+                                        {job.data.tags.map((tag, index) => (
+                                            <Card.Text className="m-0 me-2" key={index}>
                                                 <p className="job-tag">{tag}</p>
                                             </Card.Text>
                                         ))}

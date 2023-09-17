@@ -104,24 +104,29 @@ export default function CreateJobPost() {
         setShowCreatePost(false);
         setSelectedVideos([]);
         setTags([]);
+        setVideos([]);
+        setSelectedVideos([]);
+        setSelectedLogo(null)
     };
     async function fetchYouTubeVideos(event) {
         event.preventDefault();
+       if(searchInput) {
 
-        const apiKey = "AIzaSyAS5kAv_0GoEWPNS8eEirVaJB-EyeS8PXU";
-        const maxResults = 10;
+            const apiKey = "AIzaSyAS5kAv_0GoEWPNS8eEirVaJB-EyeS8PXU";
+            const maxResults = 10;
 
-        const apiUrl = `https://www.googleapis.com/youtube/v3/search?part=id&type=video&q=${searchInput}&maxResults=${maxResults}&key=${apiKey}`;
+            const apiUrl = `https://www.googleapis.com/youtube/v3/search?part=id&type=video&q=${searchInput}&maxResults=${maxResults}&key=${apiKey}`;
 
-        const response = await axios.get(apiUrl);
+            const response = await axios.get(apiUrl);
 
-        const videoLinks = response.data.items.map(
-            (item) => `https://www.youtube.com/embed/${item.id.videoId}`
-        );
+            const videoLinks = response.data.items.map(
+                (item) => `https://www.youtube.com/embed/${item.id.videoId}`
+            );
 
-        setVideos(videoLinks);
+            setVideos(videoLinks);
 
-        setSearchInput("");
+            setSearchInput("");
+        }
     }
 
     return (

@@ -161,8 +161,8 @@ export default function JobDetails() {
                                 Description: {job.data.description}
                             </Card.Text>
                             <div className="d-flex">
-                                {job.data.tags.map((tag) => (
-                                    <Card.Text className="m-0 me-2">
+                                {job.data.tags.map((tag, index) => (
+                                    <Card.Text className="m-0 me-2" key={index}>
                                         <p className="job-tag">{tag}</p>
                                     </Card.Text>
                                 ))}
