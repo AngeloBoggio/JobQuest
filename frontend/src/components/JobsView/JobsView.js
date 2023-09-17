@@ -30,7 +30,6 @@ export default function JobsView() {
         const q = query(
             collectionRef,
             where("userId", "==", userId)
-            where("userId", "==", userId)
         );
 
         setLoading(true);
