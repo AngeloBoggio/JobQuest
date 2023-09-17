@@ -138,8 +138,8 @@ export default function JobDetails() {
                                 style={{ width: "200px", height: "200px" }}
                             />
                             <div className="d-flex flex-column">
-                                <EditJob job={job} />
-                                <Button variant="outline-danger" onClick={() => deletePost(job.docId)}>Delete</Button>
+                                {job.data.userId === userId ? <EditJob job={job}/> : <div></div>}
+                                {job.data.userId === userId ? <Button variant="outline-danger" onClick={() => deletePost(job.docId)}>Delete</Button> : <div></div>}
                             </div>
                         </div>
                         <Card.Body className="ps-0">
