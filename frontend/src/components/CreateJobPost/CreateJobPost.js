@@ -60,7 +60,8 @@ export default function CreateJobPost() {
                             location: location,
                             videos: selectedVideos,
                             createdDate: serverTimestamp(),
-                            logoUrl: url
+                            logoUrl: url,
+                            jobUrl: jobUrl
                         });
                         Swal.fire({
                             icon: "success",
@@ -81,7 +82,8 @@ export default function CreateJobPost() {
                     location: location,
                     videos: selectedVideos,
                     createdDate: serverTimestamp(),
-                    logoUrl: null
+                    logoUrl: null,
+                    jobUrl: jobUrl
                 });
                 Swal.fire({
                     icon: "success",

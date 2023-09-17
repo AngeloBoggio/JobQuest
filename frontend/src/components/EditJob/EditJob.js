@@ -25,7 +25,7 @@ export default function EditJob({ job }) {
     const [salary, setSalary] = useState(job.data.salary);
     const [location, setLocation] = useState(job.data.location);
     const [description, setDescription] = useState(job.data.description);
-    const [jobUrl, setJobUrl] = useState("");
+    const [jobUrl, setJobUrl] = useState(job.data.jobUrl);
     const [tags, setTags] = useState(job.data.tags);
     const [selectedVideos, setSelectedVideos] = useState(job.data.videos);
     const [selectedLogo, setSelectedLogo] = useState(null)
@@ -60,7 +60,8 @@ export default function EditJob({ job }) {
                             location: location,
                             videos: selectedVideos,
                             createdDate: serverTimestamp(),
-                            logoUrl: url
+                            logoUrl: url,
+                            jobUrl: jobUrl
                         };
 
                         try {
@@ -88,7 +89,8 @@ export default function EditJob({ job }) {
                     location: location,
                     videos: selectedVideos,
                     createdDate: serverTimestamp(),
-                    logoUrl: job.data.logoUrl
+                    logoUrl: job.data.logoUrl,
+                    jobUrl: jobUrl
                 };
 
                 try {
