@@ -44,6 +44,16 @@ export default function CreateJobPost() {
 
     const createPost = async (event) => {
         event.preventDefault();
+
+        if (!companyName || !title || !salary || !location || !description || !jobUrl) {
+            Swal.fire({
+                icon: "error",
+                title: "Missing Fields",
+                text: "Please make sure to fill in all required fields before creating a new job."
+            });
+            return;
+        }
+
         try {
             if (selectedLogo) {
                 const url = selectedLogo.name + v4();

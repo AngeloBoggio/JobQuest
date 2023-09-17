@@ -23,7 +23,7 @@ export default function Navigation() {
         await signOut(auth);
         Swal.fire({
             icon: "success",
-            title: "You have signed out!",
+            title: "You have successfully signed out!",
             showConfirmButton: false,
             timer: 1500
         });
